@@ -227,6 +227,11 @@ ifdef CONFIG_RETPOLINE
   endif
 endif
 
+# Avoid warnings in arch/x86/include/asm/cpufeature.h when building with Clang
+ifndef CONFIG_CC_HAS_ASM_GOTO
+  KBUILD_CFLAGS += -D__BPF_TRACING__
+endif
+
 archscripts: scripts_basic
 	$(Q)$(MAKE) $(build)=arch/x86/tools relocs
 
@@ -297,10 +302,6 @@ vdso_install:
 
 archprepare: checkbin
 checkbin:
-ifndef CONFIG_CC_HAS_ASM_GOTO
-	@echo Compiler lacks asm-goto support.
-	@exit 1
-endif
 ifdef CONFIG_RETPOLINE
 ifeq ($(RETPOLINE_CFLAGS),)
 	@echo "You are building kernel with non-retpoline compiler." >&2
