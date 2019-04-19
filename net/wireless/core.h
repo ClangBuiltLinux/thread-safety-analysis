@@ -214,14 +214,14 @@ void cfg80211_init_wdev(struct cfg80211_registered_device *rdev,
 			struct wireless_dev *wdev);
 
 static inline void wdev_lock(struct wireless_dev *wdev)
-	__acquires(wdev)
+	__acquires(wdev) __acquires_mutex(wdev->mtx)
 {
 	mutex_lock(&wdev->mtx);
 	__acquire(wdev->mtx);
 }
 
 static inline void wdev_unlock(struct wireless_dev *wdev)
-	__releases(wdev)
+	__releases(wdev) __releases_mutex(wdev->mtx)
 {
 	__release(wdev->mtx);
 	mutex_unlock(&wdev->mtx);
