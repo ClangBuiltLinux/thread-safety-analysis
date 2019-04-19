@@ -360,12 +360,12 @@ static void free_masks(struct irq_desc *desc)
 static inline void free_masks(struct irq_desc *desc) { }
 #endif
 
-void irq_lock_sparse(void)
+void irq_lock_sparse(void) __acquires_mutex(sparse_irq_lock)
 {
 	mutex_lock(&sparse_irq_lock);
 }
 
-void irq_unlock_sparse(void)
+void irq_unlock_sparse(void) __releases_mutex(sparse_irq_lock)
 {
 	mutex_unlock(&sparse_irq_lock);
 }
