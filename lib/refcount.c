@@ -311,7 +311,7 @@ EXPORT_SYMBOL(refcount_dec_not_one);
  * Return: true and hold mutex if able to decrement refcount to 0, false
  *         otherwise
  */
-bool refcount_dec_and_mutex_lock(refcount_t *r, struct mutex *lock)
+bool refcount_dec_and_mutex_lock(refcount_t *r, struct mutex *lock) __try_acquires_mutex(true, lock)
 {
 	if (refcount_dec_not_one(r))
 		return false;
