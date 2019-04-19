@@ -662,7 +662,7 @@ extern struct class *fb_class;
 
 extern int lock_fb_info(struct fb_info *info);
 
-static inline void unlock_fb_info(struct fb_info *info)
+static inline void unlock_fb_info(struct fb_info *info) __releases_mutex(&info->lock)
 {
 	mutex_unlock(&info->lock);
 }
