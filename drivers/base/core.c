@@ -49,12 +49,12 @@ early_param("sysfs.deprecated", sysfs_deprecated_setup);
 static DEFINE_MUTEX(device_links_lock);
 DEFINE_STATIC_SRCU(device_links_srcu);
 
-static inline void device_links_write_lock(void)
+static inline void device_links_write_lock(void) __acquires_mutex(device_links_lock)
 {
 	mutex_lock(&device_links_lock);
 }
 
-static inline void device_links_write_unlock(void)
+static inline void device_links_write_unlock(void) __releases_mutex(device_links_lock)
 {
 	mutex_unlock(&device_links_lock);
 }
@@ -842,12 +842,12 @@ struct kobject *sysfs_dev_block_kobj;
 
 static DEFINE_MUTEX(device_hotplug_lock);
 
-void lock_device_hotplug(void)
+void lock_device_hotplug(void) __acquires_mutex(device_hotplug_lock)
 {
 	mutex_lock(&device_hotplug_lock);
 }
 
-void unlock_device_hotplug(void)
+void unlock_device_hotplug(void) __releases_mutex(device_hotplug_lock)
 {
 	mutex_unlock(&device_hotplug_lock);
 }
