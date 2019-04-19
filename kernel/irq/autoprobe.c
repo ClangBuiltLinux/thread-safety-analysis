@@ -27,7 +27,7 @@ static DEFINE_MUTEX(probing_active);
  *	and a mask of potential interrupt lines is returned.
  *
  */
-unsigned long probe_irq_on(void)
+unsigned long probe_irq_on(void) __acquires_mutex(probing_active)
 {
 	struct irq_desc *desc;
 	unsigned long mask = 0;
@@ -114,7 +114,7 @@ EXPORT_SYMBOL(probe_irq_on);
  *	only return autodetect irq numbers - just so that we reset
  *	them all to a known state.
  */
-unsigned int probe_irq_mask(unsigned long val)
+unsigned int probe_irq_mask(unsigned long val) __releases_mutex(probing_active)
 {
 	unsigned int mask = 0;
 	struct irq_desc *desc;
@@ -154,7 +154,7 @@ EXPORT_SYMBOL(probe_irq_mask);
  *	nothing prevents two IRQ probe callers from overlapping. The
  *	results of this are non-optimal.
  */
-int probe_irq_off(unsigned long val)
+int probe_irq_off(unsigned long val) __releases_mutex(probing_active)
 {
 	int i, irq_found = 0, nr_of_irqs = 0;
 	struct irq_desc *desc;
