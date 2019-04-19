@@ -10641,7 +10641,7 @@ out:
 	return ret;
 }
 
-static void mutex_lock_double(struct mutex *a, struct mutex *b)
+static void mutex_lock_double(struct mutex *a, struct mutex *b) __acquires_mutex(a) __acquires_mutex(b)
 {
 	if (b < a)
 		swap(a, b);
