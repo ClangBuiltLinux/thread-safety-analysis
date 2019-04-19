@@ -852,7 +852,7 @@ void unlock_device_hotplug(void) __releases_mutex(device_hotplug_lock)
 	mutex_unlock(&device_hotplug_lock);
 }
 
-int lock_device_hotplug_sysfs(void)
+int lock_device_hotplug_sysfs(void) __try_acquires_mutex(0, device_hotplug_lock)
 {
 	if (mutex_trylock(&device_hotplug_lock))
 		return 0;
