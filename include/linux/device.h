@@ -1202,7 +1202,7 @@ static inline bool dev_pm_test_driver_flags(struct device *dev, u32 flags)
 	return !!(dev->power.driver_flags & flags);
 }
 
-static inline void device_lock(struct device *dev)
+static inline void device_lock(struct device *dev) __acquires_mutex(&dev->mutex)
 {
 	mutex_lock(&dev->mutex);
 }
@@ -1217,7 +1217,7 @@ static inline int device_trylock(struct device *dev)
 	return mutex_trylock(&dev->mutex);
 }
 
-static inline void device_unlock(struct device *dev)
+static inline void device_unlock(struct device *dev) __releases_mutex(&dev->mutex)
 {
 	mutex_unlock(&dev->mutex);
 }
