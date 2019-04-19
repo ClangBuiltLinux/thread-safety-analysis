@@ -3975,14 +3975,14 @@ static void apply_wqattrs_commit(struct apply_wqattrs_ctx *ctx)
 	mutex_unlock(&ctx->wq->mutex);
 }
 
-static void apply_wqattrs_lock(void)
+static void apply_wqattrs_lock(void) __acquires_mutex(wq_pool_mutex)
 {
 	/* CPUs should stay stable across pwq creations and installations */
 	get_online_cpus();
 	mutex_lock(&wq_pool_mutex);
 }
 
-static void apply_wqattrs_unlock(void)
+static void apply_wqattrs_unlock(void) __releases_mutex(wq_pool_mutex)
 {
 	mutex_unlock(&wq_pool_mutex);
 	put_online_cpus();
