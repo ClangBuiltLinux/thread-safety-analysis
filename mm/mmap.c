@@ -3536,7 +3536,7 @@ static void vm_lock_mapping(struct mm_struct *mm, struct address_space *mapping)
  *
  * mm_take_all_locks() can fail if it's interrupted by signals.
  */
-int mm_take_all_locks(struct mm_struct *mm)
+int mm_take_all_locks(struct mm_struct *mm) __try_acquires_mutex(0, mm_all_locks_mutex)
 {
 	struct vm_area_struct *vma;
 	struct anon_vma_chain *avc;
@@ -3616,7 +3616,7 @@ static void vm_unlock_mapping(struct address_space *mapping)
  * The mmap_sem cannot be released by the caller until
  * mm_drop_all_locks() returns.
  */
-void mm_drop_all_locks(struct mm_struct *mm)
+void mm_drop_all_locks(struct mm_struct *mm) __releases_mutex(mm_all_locks_mutex)
 {
 	struct vm_area_struct *vma;
 	struct anon_vma_chain *avc;
