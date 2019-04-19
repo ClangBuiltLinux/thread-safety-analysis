@@ -63,7 +63,7 @@ struct mutex {
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
 	struct lockdep_map	dep_map;
 #endif
-};
+} __attribute__((capability("mutex")));
 
 /*
  * Internal helper function; C doesn't allow us to hide it :/
@@ -175,9 +175,9 @@ do {									\
 } while (0)
 
 #else
-extern void mutex_lock(struct mutex *lock);
-extern int __must_check mutex_lock_interruptible(struct mutex *lock);
-extern int __must_check mutex_lock_killable(struct mutex *lock);
+extern void mutex_lock(struct mutex *lock) __acquires_mutex(lock);
+extern int __must_check mutex_lock_interruptible(struct mutex *lock) __try_acquires_mutex(0, lock);
+extern int __must_check mutex_lock_killable(struct mutex *lock) __try_acquires_mutex(0, lock);
 extern void mutex_lock_io(struct mutex *lock);
 
 # define mutex_lock_nested(lock, subclass) mutex_lock(lock)
@@ -193,10 +193,10 @@ extern void mutex_lock_io(struct mutex *lock);
  *
  * Returns 1 if the mutex has been acquired successfully, and 0 on contention.
  */
-extern int mutex_trylock(struct mutex *lock);
-extern void mutex_unlock(struct mutex *lock);
+extern int mutex_trylock(struct mutex *lock) __try_acquires_mutex(1, lock);
+extern void mutex_unlock(struct mutex *lock) __releases_mutex(lock);
 
-extern int atomic_dec_and_mutex_lock(atomic_t *cnt, struct mutex *lock);
+extern int atomic_dec_and_mutex_lock(atomic_t *cnt, struct mutex *lock) __try_acquires_mutex(1, lock);
 
 /*
  * These values are chosen such that FAIL and SUCCESS match the
