@@ -998,14 +998,14 @@ struct ieee80211_sub_if_data *vif_to_sdata(struct ieee80211_vif *p)
 }
 
 static inline void sdata_lock(struct ieee80211_sub_if_data *sdata)
-	__acquires(&sdata->wdev.mtx)
+	__acquires(&sdata->wdev.mtx) __acquires_mutex(&sdata->wdev.mtx)
 {
 	mutex_lock(&sdata->wdev.mtx);
 	__acquire(&sdata->wdev.mtx);
 }
 
 static inline void sdata_unlock(struct ieee80211_sub_if_data *sdata)
-	__releases(&sdata->wdev.mtx)
+	__releases(&sdata->wdev.mtx) __releases_mutex(&sdata->wdev.mtx)
 {
 	mutex_unlock(&sdata->wdev.mtx);
 	__release(&sdata->wdev.mtx);
