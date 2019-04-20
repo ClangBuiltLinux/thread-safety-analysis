@@ -1520,7 +1520,7 @@ static u16 cgroup_calc_subtree_ss_mask(u16 subtree_control, u16 this_ss_mask)
  * inaccessible any time.  If the caller intends to continue to access the
  * cgroup, it should pin it before invoking this function.
  */
-void cgroup_kn_unlock(struct kernfs_node *kn)
+void cgroup_kn_unlock(struct kernfs_node *kn) __releases_mutex(cgroup_mutex)
 {
 	struct cgroup *cgrp;
 
@@ -1552,7 +1552,7 @@ void cgroup_kn_unlock(struct kernfs_node *kn)
  * locking under kernfs active protection and allows all kernfs operations
  * including self-removal.
  */
-struct cgroup *cgroup_kn_lock_live(struct kernfs_node *kn, bool drain_offline)
+struct cgroup *cgroup_kn_lock_live(struct kernfs_node *kn, bool drain_offline) __try_acquires_mutex(1, cgroup_mutex)
 {
 	struct cgroup *cgrp;
 
@@ -2882,7 +2882,7 @@ out_finish:
  * cgroup_mutex and drains the previous css instances of @cgrp's subtree.
  */
 void cgroup_lock_and_drain_offline(struct cgroup *cgrp)
-	__acquires(&cgroup_mutex)
+	__acquires(&cgroup_mutex) __acquires_mutex(cgroup_mutex)
 {
 	struct cgroup *dsct;
 	struct cgroup_subsys_state *d_css;
