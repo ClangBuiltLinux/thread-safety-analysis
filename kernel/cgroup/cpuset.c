@@ -2913,7 +2913,7 @@ static void remove_tasks_in_empty_cpuset(struct cpuset *cs)
 static void
 hotplug_update_tasks_legacy(struct cpuset *cs,
 			    struct cpumask *new_cpus, nodemask_t *new_mems,
-			    bool cpus_updated, bool mems_updated)
+			    bool cpus_updated, bool mems_updated) __requires_mutex(cpuset_mutex)
 {
 	bool is_empty;
 
