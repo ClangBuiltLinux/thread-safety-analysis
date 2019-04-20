@@ -71,7 +71,7 @@ struct rtnl_link {
 
 static DEFINE_MUTEX(rtnl_mutex);
 
-void rtnl_lock(void)
+void rtnl_lock(void) __acquires_mutex(rtnl_mutex)
 {
 	mutex_lock(&rtnl_mutex);
 }
@@ -93,7 +93,7 @@ void rtnl_kfree_skbs(struct sk_buff *head, struct sk_buff *tail)
 }
 EXPORT_SYMBOL(rtnl_kfree_skbs);
 
-void __rtnl_unlock(void)
+void __rtnl_unlock(void) __releases_mutex(rtnl_mutex)
 {
 	struct sk_buff *head = defer_kfree_skb_list;
 
