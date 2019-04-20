@@ -4278,7 +4278,7 @@ t_next(struct seq_file *m, void *v, loff_t *pos)
 	return t;
 }
 
-static void *t_start(struct seq_file *m, loff_t *pos)
+static void *t_start(struct seq_file *m, loff_t *pos) __acquires_mutex(trace_types_lock)
 {
 	struct trace_array *tr = m->private;
 	struct tracer *t;
@@ -4293,7 +4293,7 @@ static void *t_start(struct seq_file *m, loff_t *pos)
 	return t;
 }
 
-static void t_stop(struct seq_file *m, void *p)
+static void t_stop(struct seq_file *m, void *p) __releases_mutex(trace_types_lock)
 {
 	mutex_unlock(&trace_types_lock);
 }
