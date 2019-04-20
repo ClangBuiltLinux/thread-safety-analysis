@@ -28,13 +28,13 @@ static DECLARE_RWSEM(cb_lock);
 atomic_t genl_sk_destructing_cnt = ATOMIC_INIT(0);
 DECLARE_WAIT_QUEUE_HEAD(genl_sk_destructing_waitq);
 
-void genl_lock(void)
+void genl_lock(void) __acquires_mutex(genl_mutex)
 {
 	mutex_lock(&genl_mutex);
 }
 EXPORT_SYMBOL(genl_lock);
 
-void genl_unlock(void)
+void genl_unlock(void) __releases_mutex(genl_mutex)
 {
 	mutex_unlock(&genl_mutex);
 }
