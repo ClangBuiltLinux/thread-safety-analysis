@@ -72,7 +72,7 @@ static inline int kref_put(struct kref *kref, void (*release)(struct kref *kref)
 
 static inline int kref_put_mutex(struct kref *kref,
 				 void (*release)(struct kref *kref),
-				 struct mutex *lock)
+				 struct mutex *lock)  __try_acquires_mutex(1, lock)
 {
 	if (refcount_dec_and_mutex_lock(&kref->refcount, lock)) {
 		release(kref);
