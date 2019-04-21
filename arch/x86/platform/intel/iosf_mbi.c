@@ -218,13 +218,13 @@ static u32 iosf_mbi_sem_address;
 static unsigned long iosf_mbi_sem_acquired;
 static struct pm_qos_request iosf_mbi_pm_qos;
 
-void iosf_mbi_punit_acquire(void)
+void iosf_mbi_punit_acquire(void) __acquires_mutex(iosf_mbi_punit_mutex)
 {
 	mutex_lock(&iosf_mbi_punit_mutex);
 }
 EXPORT_SYMBOL(iosf_mbi_punit_acquire);
 
-void iosf_mbi_punit_release(void)
+void iosf_mbi_punit_release(void) __releases_mutex(iosf_mbi_punit_mutex)
 {
 	mutex_unlock(&iosf_mbi_punit_mutex);
 }
@@ -297,7 +297,7 @@ static void iosf_mbi_reset_semaphore(void)
  *    As the fourth and final step we request this semaphore and wait for our
  *    request to be acknowledged.
  */
-int iosf_mbi_block_punit_i2c_access(void)
+int iosf_mbi_block_punit_i2c_access(void) __try_acquires_mutex(0, iosf_mbi_punit_mutex)
 {
 	unsigned long start, end;
 	int ret = 0;
