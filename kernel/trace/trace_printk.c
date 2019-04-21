@@ -158,12 +158,12 @@ find_next_mod_format(int start_index, void *v, const char **fmt, loff_t *pos)
 	return &mod_fmt->fmt;
 }
 
-static void format_mod_start(void)
+static void format_mod_start(void) __acquires_mutex(btrace_mutex)
 {
 	mutex_lock(&btrace_mutex);
 }
 
-static void format_mod_stop(void)
+static void format_mod_stop(void) __releases_mutex(btrace_mutex)
 {
 	mutex_unlock(&btrace_mutex);
 }
