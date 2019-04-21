@@ -1322,7 +1322,7 @@ static void print_slabinfo_header(struct seq_file *m)
 	seq_putc(m, '\n');
 }
 
-void *slab_start(struct seq_file *m, loff_t *pos)
+void *slab_start(struct seq_file *m, loff_t *pos) __acquires_mutex(slab_mutex)
 {
 	mutex_lock(&slab_mutex);
 	return seq_list_start(&slab_root_caches, *pos);
@@ -1333,7 +1333,7 @@ void *slab_next(struct seq_file *m, void *p, loff_t *pos)
 	return seq_list_next(p, &slab_root_caches, pos);
 }
 
-void slab_stop(struct seq_file *m, void *p)
+void slab_stop(struct seq_file *m, void *p) __releases_mutex(slab_mutex)
 {
 	mutex_unlock(&slab_mutex);
 }
