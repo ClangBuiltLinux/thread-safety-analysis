@@ -178,7 +178,7 @@ do {									\
 extern void mutex_lock(struct mutex *lock) __acquires_mutex(lock);
 extern int __must_check mutex_lock_interruptible(struct mutex *lock) __try_acquires_mutex(0, lock);
 extern int __must_check mutex_lock_killable(struct mutex *lock) __try_acquires_mutex(0, lock);
-extern void mutex_lock_io(struct mutex *lock);
+extern void mutex_lock_io(struct mutex *lock) __acquires_mutex(lock);
 
 # define mutex_lock_nested(lock, subclass) mutex_lock(lock)
 # define mutex_lock_interruptible_nested(lock, subclass) mutex_lock_interruptible(lock)

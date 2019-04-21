@@ -1317,7 +1317,7 @@ EXPORT_SYMBOL(mutex_lock_killable);
  *
  * Context: Process context.
  */
-void __sched mutex_lock_io(struct mutex *lock)
+void __sched mutex_lock_io(struct mutex *lock) __acquires_mutex(lock)
 {
 	int token;
 
