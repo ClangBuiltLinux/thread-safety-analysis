@@ -55,24 +55,24 @@ struct acpi_dep_data {
 	acpi_handle slave;
 };
 
-void acpi_scan_lock_acquire(void)
+void acpi_scan_lock_acquire(void) __acquires_mutex(acpi_scan_lock)
 {
 	mutex_lock(&acpi_scan_lock);
 }
 EXPORT_SYMBOL_GPL(acpi_scan_lock_acquire);
 
-void acpi_scan_lock_release(void)
+void acpi_scan_lock_release(void) __releases_mutex(acpi_scan_lock)
 {
 	mutex_unlock(&acpi_scan_lock);
 }
 EXPORT_SYMBOL_GPL(acpi_scan_lock_release);
 
-void acpi_lock_hp_context(void)
+void acpi_lock_hp_context(void) __acquires_mutex(acpi_hp_context_lock)
 {
 	mutex_lock(&acpi_hp_context_lock);
 }
 
-void acpi_unlock_hp_context(void)
+void acpi_unlock_hp_context(void) __releases_mutex(acpi_hp_context_lock)
 {
 	mutex_unlock(&acpi_hp_context_lock);
 }
