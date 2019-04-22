@@ -67,7 +67,7 @@ static void reactivate_swap_slots_cache(void)
 }
 
 /* Must not be called with cpu hot plug lock */
-void disable_swap_slots_cache_lock(void)
+void disable_swap_slots_cache_lock(void) __acquires_mutex(swap_slots_cache_enable_mutex)
 {
 	mutex_lock(&swap_slots_cache_enable_mutex);
 	swap_slot_cache_enabled = false;
@@ -84,7 +84,7 @@ static void __reenable_swap_slots_cache(void)
 	swap_slot_cache_enabled = has_usable_swap();
 }
 
-void reenable_swap_slots_cache_unlock(void)
+void reenable_swap_slots_cache_unlock(void) __releases_mutex(swap_slots_cache_enable_mutex)
 {
 	__reenable_swap_slots_cache();
 	mutex_unlock(&swap_slots_cache_enable_mutex);
