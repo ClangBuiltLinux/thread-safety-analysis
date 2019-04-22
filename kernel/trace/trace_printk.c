@@ -284,7 +284,7 @@ static const char **find_next(void *v, loff_t *pos)
 }
 
 static void *
-t_start(struct seq_file *m, loff_t *pos)
+t_start(struct seq_file *m, loff_t *pos) __acquires_mutex(btrace_mutex)
 {
 	format_mod_start();
 	return find_next(NULL, pos);
@@ -333,7 +333,7 @@ static int t_show(struct seq_file *m, void *v)
 	return 0;
 }
 
-static void t_stop(struct seq_file *m, void *p)
+static void t_stop(struct seq_file *m, void *p) __releases_mutex(btrace_mutex)
 {
 	format_mod_stop();
 }
