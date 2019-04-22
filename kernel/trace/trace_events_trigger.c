@@ -121,7 +121,7 @@ static void *trigger_next(struct seq_file *m, void *t, loff_t *pos)
 	return seq_list_next(t, &event_file->triggers, pos);
 }
 
-static void *trigger_start(struct seq_file *m, loff_t *pos)
+static void *trigger_start(struct seq_file *m, loff_t *pos) __acquires_mutex(event_mutex)
 {
 	struct trace_event_file *event_file;
 
@@ -137,7 +137,7 @@ static void *trigger_start(struct seq_file *m, loff_t *pos)
 	return seq_list_start(&event_file->triggers, *pos);
 }
 
-static void trigger_stop(struct seq_file *m, void *t)
+static void trigger_stop(struct seq_file *m, void *t) __releases_mutex(event_mutex)
 {
 	mutex_unlock(&event_mutex);
 }
