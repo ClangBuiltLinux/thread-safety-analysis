@@ -175,13 +175,13 @@ static irqreturn_t i8042_interrupt(int irq, void *dev_id);
 static bool (*i8042_platform_filter)(unsigned char data, unsigned char str,
 				     struct serio *serio);
 
-void i8042_lock_chip(void)
+void i8042_lock_chip(void) __acquires_mutex(i8042_mutex)
 {
 	mutex_lock(&i8042_mutex);
 }
 EXPORT_SYMBOL(i8042_lock_chip);
 
-void i8042_unlock_chip(void)
+void i8042_unlock_chip(void) __releases_mutex(i8042_mutex)
 {
 	mutex_unlock(&i8042_mutex);
 }
