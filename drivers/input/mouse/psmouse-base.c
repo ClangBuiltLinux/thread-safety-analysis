@@ -1897,7 +1897,7 @@ static ssize_t psmouse_attr_show_protocol(struct psmouse *psmouse, void *data, c
 	return sprintf(buf, "%s\n", psmouse->protocol->name);
 }
 
-static ssize_t psmouse_attr_set_protocol(struct psmouse *psmouse, void *data, const char *buf, size_t count)
+static ssize_t psmouse_attr_set_protocol(struct psmouse *psmouse, void *data, const char *buf, size_t count) __requires_mutex(psmouse_mutex)
 {
 	struct serio *serio = psmouse->ps2dev.serio;
 	struct psmouse *parent = NULL;
