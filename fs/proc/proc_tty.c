@@ -103,7 +103,7 @@ static int show_tty_driver(struct seq_file *m, void *v)
 }
 
 /* iterator */
-static void *t_start(struct seq_file *m, loff_t *pos)
+static void *t_start(struct seq_file *m, loff_t *pos) __acquires_mutex(tty_mutex)
 {
 	mutex_lock(&tty_mutex);
 	return seq_list_start(&tty_drivers, *pos);
@@ -114,7 +114,7 @@ static void *t_next(struct seq_file *m, void *v, loff_t *pos)
 	return seq_list_next(v, &tty_drivers, pos);
 }
 
-static void t_stop(struct seq_file *m, void *v)
+static void t_stop(struct seq_file *m, void *v) __releases_mutex(tty_mutex)
 {
 	mutex_unlock(&tty_mutex);
 }
