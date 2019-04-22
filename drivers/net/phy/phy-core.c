@@ -798,7 +798,7 @@ static int __phy_write_page(struct phy_device *phydev, int page)
  * returns a negative errno. phy_restore_page() must always be called
  * after this, irrespective of success or failure of this call.
  */
-int phy_save_page(struct phy_device *phydev)
+int phy_save_page(struct phy_device *phydev) __acquires_mutex(phydev->mdio.bus->mdio_lock)
 {
 	mutex_lock(&phydev->mdio.bus->mdio_lock);
 	return __phy_read_page(phydev);
@@ -850,7 +850,7 @@ EXPORT_SYMBOL_GPL(phy_select_page);
  *   phy_write_page()'s negative value if it were in error, otherwise
  *   @ret.
  */
-int phy_restore_page(struct phy_device *phydev, int oldpage, int ret)
+int phy_restore_page(struct phy_device *phydev, int oldpage, int ret) __releases_mutex(phydev->mdio.bus->mdio_lock)
 {
 	int r;
 
