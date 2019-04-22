@@ -2595,7 +2595,7 @@ static __poll_t swaps_poll(struct file *file, poll_table *wait)
 }
 
 /* iterator */
-static void *swap_start(struct seq_file *swap, loff_t *pos)
+static void *swap_start(struct seq_file *swap, loff_t *pos)  __acquires_mutex(swapon_mutex)
 {
 	struct swap_info_struct *si;
 	int type;
@@ -2636,7 +2636,7 @@ static void *swap_next(struct seq_file *swap, void *v, loff_t *pos)
 	return NULL;
 }
 
-static void swap_stop(struct seq_file *swap, void *v)
+static void swap_stop(struct seq_file *swap, void *v) __releases_mutex(swapon_mutex)
 {
 	mutex_unlock(&swapon_mutex);
 }
