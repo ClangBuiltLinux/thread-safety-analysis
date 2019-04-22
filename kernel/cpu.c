@@ -263,12 +263,12 @@ EXPORT_SYMBOL_GPL(cpuhp_tasks_frozen);
  * The following two APIs (cpu_maps_update_begin/done) must be used when
  * attempting to serialize the updates to cpu_online_mask & cpu_present_mask.
  */
-void cpu_maps_update_begin(void)
+void cpu_maps_update_begin(void) __acquires_mutex(cpu_add_remove_lock)
 {
 	mutex_lock(&cpu_add_remove_lock);
 }
 
-void cpu_maps_update_done(void)
+void cpu_maps_update_done(void) __releases_mutex(cpu_add_remove_lock)
 {
 	mutex_unlock(&cpu_add_remove_lock);
 }
