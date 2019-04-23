@@ -3433,7 +3433,7 @@ EXPORT_SYMBOL(sock_load_diag_module);
 
 #ifdef CONFIG_PROC_FS
 static void *proto_seq_start(struct seq_file *seq, loff_t *pos)
-	__acquires(proto_list_mutex)
+	__acquires(proto_list_mutex) __acquires_mutex(proto_list_mutex)
 {
 	mutex_lock(&proto_list_mutex);
 	return seq_list_start_head(&proto_list, *pos);
@@ -3445,7 +3445,7 @@ static void *proto_seq_next(struct seq_file *seq, void *v, loff_t *pos)
 }
 
 static void proto_seq_stop(struct seq_file *seq, void *v)
-	__releases(proto_list_mutex)
+	__releases(proto_list_mutex) __releases_mutex(proto_list_mutex)
 {
 	mutex_unlock(&proto_list_mutex);
 }
