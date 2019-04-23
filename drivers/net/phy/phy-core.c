@@ -816,7 +816,7 @@ EXPORT_SYMBOL_GPL(phy_save_page);
  * phy_restore_page() must always be called after this, irrespective
  * of success or failure of this call.
  */
-int phy_select_page(struct phy_device *phydev, int page)
+int phy_select_page(struct phy_device *phydev, int page) __acquires_mutex(phydev->mdio.bus->mdio_lock)
 {
 	int ret, oldpage;
 
