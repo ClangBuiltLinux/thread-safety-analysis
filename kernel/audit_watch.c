@@ -411,7 +411,7 @@ static void audit_add_to_parent(struct audit_krule *krule,
 
 /* Find a matching watch entry, or add this one.
  * Caller must hold audit_filter_mutex. */
-int audit_add_watch(struct audit_krule *krule, struct list_head **list)
+int audit_add_watch(struct audit_krule *krule, struct list_head **list) __requires_mutex(audit_filter_mutex)
 {
 	struct audit_watch *watch = krule->watch;
 	struct audit_parent *parent;
