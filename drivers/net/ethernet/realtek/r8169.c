@@ -734,12 +734,12 @@ static inline struct device *tp_to_dev(struct rtl8169_private *tp)
 	return &tp->pci_dev->dev;
 }
 
-static void rtl_lock_work(struct rtl8169_private *tp)
+static void rtl_lock_work(struct rtl8169_private *tp) __acquires_mutex(tp->wk.mutex)
 {
 	mutex_lock(&tp->wk.mutex);
 }
 
-static void rtl_unlock_work(struct rtl8169_private *tp)
+static void rtl_unlock_work(struct rtl8169_private *tp) __releases_mutex(tp->wk.mutex)
 {
 	mutex_unlock(&tp->wk.mutex);
 }
