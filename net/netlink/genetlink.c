@@ -48,13 +48,13 @@ bool lockdep_genl_is_held(void)
 EXPORT_SYMBOL(lockdep_genl_is_held);
 #endif
 
-static void genl_lock_all(void)
+static void genl_lock_all(void) __acquires_mutex(genl_mutex)
 {
 	down_write(&cb_lock);
 	genl_lock();
 }
 
-static void genl_unlock_all(void)
+static void genl_unlock_all(void) __releases_mutex(genl_mutex)
 {
 	genl_unlock();
 	up_write(&cb_lock);
