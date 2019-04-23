@@ -2280,7 +2280,7 @@ out_free:
 	return err;
 }
 
-static void azx_remove(struct pci_dev *pci)
+static void azx_remove(struct pci_dev *pci) __requires_mutex(pci->dev.mutex)
 {
 	struct snd_card *card = pci_get_drvdata(pci);
 	struct azx *chip;
