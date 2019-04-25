@@ -3274,13 +3274,13 @@ EXPORT_SYMBOL_GPL(pci_rescan_bus);
  */
 static DEFINE_MUTEX(pci_rescan_remove_lock);
 
-void pci_lock_rescan_remove(void)
+void pci_lock_rescan_remove(void) __acquires_mutex(pci_rescan_remove_lock)
 {
 	mutex_lock(&pci_rescan_remove_lock);
 }
 EXPORT_SYMBOL_GPL(pci_lock_rescan_remove);
 
-void pci_unlock_rescan_remove(void)
+void pci_unlock_rescan_remove(void) __releases_mutex(pci_rescan_remove_lock)
 {
 	mutex_unlock(&pci_rescan_remove_lock);
 }
