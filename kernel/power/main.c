@@ -21,14 +21,14 @@
 
 #ifdef CONFIG_PM_SLEEP
 
-void lock_system_sleep(void)
+void lock_system_sleep(void) __acquires_mutex(system_transition_mutex)
 {
 	current->flags |= PF_FREEZER_SKIP;
 	mutex_lock(&system_transition_mutex);
 }
 EXPORT_SYMBOL_GPL(lock_system_sleep);
 
-void unlock_system_sleep(void)
+void unlock_system_sleep(void) __releases_mutex(system_transition_mutex)
 {
 	/*
 	 * Don't use freezer_count() because we don't want the call to
