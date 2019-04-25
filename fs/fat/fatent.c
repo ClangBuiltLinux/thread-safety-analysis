@@ -274,12 +274,12 @@ static const struct fatent_operations fat32_ops = {
 	.ent_next	= fat32_ent_next,
 };
 
-static inline void lock_fat(struct msdos_sb_info *sbi)
+static inline void lock_fat(struct msdos_sb_info *sbi) __acquires_mutex(sbi->fat_lock)
 {
 	mutex_lock(&sbi->fat_lock);
 }
 
-static inline void unlock_fat(struct msdos_sb_info *sbi)
+static inline void unlock_fat(struct msdos_sb_info *sbi) __releases_mutex(sbi->fat_lock)
 {
 	mutex_unlock(&sbi->fat_lock);
 }
