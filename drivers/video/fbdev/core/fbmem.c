@@ -80,7 +80,7 @@ static void put_fb_info(struct fb_info *fb_info)
 		fb_info->fbops->fb_destroy(fb_info);
 }
 
-int lock_fb_info(struct fb_info *info)
+int lock_fb_info(struct fb_info *info) __try_acquires_mutex(1, info->lock)
 {
 	mutex_lock(&info->lock);
 	if (!info->fbops) {
