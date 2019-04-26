@@ -499,7 +499,7 @@ enum recovery_flags {
 	MD_RESYNCING_REMOTE,	/* remote node is running resync thread */
 };
 
-static inline int __must_check mddev_lock(struct mddev *mddev)
+static inline int __must_check mddev_lock(struct mddev *mddev) __try_acquires_mutex(0, mddev->reconfig_mutex)
 {
 	return mutex_lock_interruptible(&mddev->reconfig_mutex);
 }
@@ -507,7 +507,7 @@ static inline int __must_check mddev_lock(struct mddev *mddev)
 /* Sometimes we need to take the lock in a situation where
  * failure due to interrupts is not acceptable.
  */
-static inline void mddev_lock_nointr(struct mddev *mddev)
+static inline void mddev_lock_nointr(struct mddev *mddev) __acquires_mutex(mddev->reconfig_mutex)
 {
 	mutex_lock(&mddev->reconfig_mutex);
 }

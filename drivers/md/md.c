@@ -647,7 +647,7 @@ static struct mddev *mddev_find(dev_t unit)
 
 static struct attribute_group md_redundancy_group;
 
-void mddev_unlock(struct mddev *mddev)
+void mddev_unlock(struct mddev *mddev) __releases_mutex(mddev->reconfig_mutex)
 {
 	if (mddev->to_remove) {
 		/* These cannot be removed under reconfig_mutex as
