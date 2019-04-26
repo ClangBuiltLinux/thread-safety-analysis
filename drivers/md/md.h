@@ -512,7 +512,7 @@ static inline void mddev_lock_nointr(struct mddev *mddev) __acquires_mutex(mddev
 	mutex_lock(&mddev->reconfig_mutex);
 }
 
-static inline int mddev_trylock(struct mddev *mddev)
+static inline int mddev_trylock(struct mddev *mddev) __try_acquires_mutex(1, mddev->reconfig_mutex)
 {
 	return mutex_trylock(&mddev->reconfig_mutex);
 }
