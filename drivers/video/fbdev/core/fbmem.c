@@ -712,7 +712,7 @@ int fb_show_logo(struct fb_info *info, int rotate) { return 0; }
 EXPORT_SYMBOL(fb_prepare_logo);
 EXPORT_SYMBOL(fb_show_logo);
 
-static void *fb_seq_start(struct seq_file *m, loff_t *pos)
+static void *fb_seq_start(struct seq_file *m, loff_t *pos) __acquires_mutex(registration_lock)
 {
 	mutex_lock(&registration_lock);
 	return (*pos < FB_MAX) ? pos : NULL;
@@ -724,7 +724,7 @@ static void *fb_seq_next(struct seq_file *m, void *v, loff_t *pos)
 	return (*pos < FB_MAX) ? pos : NULL;
 }
 
-static void fb_seq_stop(struct seq_file *m, void *v)
+static void fb_seq_stop(struct seq_file *m, void *v)  __releases_mutex(registration_lock)
 {
 	mutex_unlock(&registration_lock);
 }
