@@ -660,7 +660,7 @@ extern struct class *fb_class;
 	for (i = 0; i < FB_MAX; i++)		\
 		if (!registered_fb[i]) {} else
 
-extern int lock_fb_info(struct fb_info *info);
+extern int lock_fb_info(struct fb_info *info) __try_acquires_mutex(1, info->lock);
 
 static inline void unlock_fb_info(struct fb_info *info) __releases_mutex(&info->lock)
 {
