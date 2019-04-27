@@ -5916,7 +5916,7 @@ void md_stop(struct mddev *mddev)
 
 EXPORT_SYMBOL_GPL(md_stop);
 
-static int md_set_readonly(struct mddev *mddev, struct block_device *bdev)
+static int md_set_readonly(struct mddev *mddev, struct block_device *bdev) __requires_mutex(mddev->reconfig_mutex)
 {
 	int err = 0;
 	int did_freeze = 0;
@@ -5979,7 +5979,7 @@ out:
  *   2 - stop but do not disassemble array
  */
 static int do_md_stop(struct mddev *mddev, int mode,
-		      struct block_device *bdev)
+		      struct block_device *bdev) __requires_mutex(mddev->reconfig_mutex)
 {
 	struct gendisk *disk = mddev->gendisk;
 	struct md_rdev *rdev;
