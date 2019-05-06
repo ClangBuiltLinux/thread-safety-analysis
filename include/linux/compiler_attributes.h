@@ -253,4 +253,22 @@
  */
 #define __weak                          __attribute__((__weak__))
 
+/*
+ * clang thread safety analysis:
+ * TODO Link
+ * Only provided by clang.
+ * Naming for now: name the locking primitive, although irrelevant for analysis.
+ */
+#if __has_attribute(capability)
+# define __acquires_mutex(x)            __attribute__((acquire_capability(x)))
+# define __releases_mutex(x)            __attribute__((release_capability(x)))
+# define __try_acquires_mutex(r, x)     __attribute__((try_acquire_capability(r, x)))
+# define __requires_mutex(x)            __attribute__((requires_capability(x)))
+#else
+# define __acquires_mutex(x)
+# define __releases_mutex(x)
+# define __try_acquires_mutex(r, x)
+# define __requires_mutex(x)
+#endif
+
 #endif /* __LINUX_COMPILER_ATTRIBUTES_H */
