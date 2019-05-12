@@ -56,7 +56,7 @@ unsigned long pipe_user_pages_soft = PIPE_DEF_BUFFERS * INR_OPEN_CUR;
  * -- Manfred Spraul <manfred@colorfullife.com> 2002-05-09
  */
 
-static void pipe_lock_nested(struct pipe_inode_info *pipe, int subclass)
+static void pipe_lock_nested(struct pipe_inode_info *pipe, int subclass) __acquires_conditionally(pipe->mutex)
 {
 	if (pipe->files)
 		mutex_lock_nested(&pipe->mutex, subclass);
@@ -71,7 +71,7 @@ void pipe_lock(struct pipe_inode_info *pipe)
 }
 EXPORT_SYMBOL(pipe_lock);
 
-void pipe_unlock(struct pipe_inode_info *pipe)
+void pipe_unlock(struct pipe_inode_info *pipe) __releases_conditionally(pipe->mutex)
 {
 	if (pipe->files)
 		mutex_unlock(&pipe->mutex);
