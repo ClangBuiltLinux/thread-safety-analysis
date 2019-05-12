@@ -1367,7 +1367,7 @@ static struct pcpu_chunk *pcpu_chunk_addr_search(void *addr)
  * Percpu pointer to the allocated area on success, NULL on failure.
  */
 static void __percpu *pcpu_alloc(size_t size, size_t align, bool reserved,
-				 gfp_t gfp)
+				 gfp_t gfp) __uses_conditionally(pcpu_alloc_mutex)
 {
 	/* whitelisted flags that can be passed to the backing allocators */
 	gfp_t pcpu_gfp = gfp & (GFP_KERNEL | __GFP_NORETRY | __GFP_NOWARN);
