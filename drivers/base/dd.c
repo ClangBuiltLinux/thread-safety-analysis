@@ -1043,7 +1043,7 @@ EXPORT_SYMBOL_GPL(driver_attach);
  * __device_release_driver() must be called with @dev lock held.
  * When called for a USB interface, @dev->parent lock must be held as well.
  */
-static void __device_release_driver(struct device *dev, struct device *parent)
+static void __device_release_driver(struct device *dev, struct device *parent) __requires_mutex(dev->mutex)
 {
 	struct device_driver *drv;
 
