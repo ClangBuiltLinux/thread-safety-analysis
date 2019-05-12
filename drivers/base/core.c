@@ -3045,7 +3045,7 @@ EXPORT_SYMBOL_GPL(device_move);
 /**
  * device_shutdown - call ->shutdown() on each device to shutdown.
  */
-void device_shutdown(void)
+void device_shutdown(void) __uses_conditionally()
 {
 	struct device *dev, *parent;
 
