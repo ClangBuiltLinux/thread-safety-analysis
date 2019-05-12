@@ -707,7 +707,7 @@ void bus_remove_driver(struct device_driver *drv)
 
 /* Helper for bus_rescan_devices's iter */
 static int __must_check bus_rescan_devices_helper(struct device *dev,
-						  void *data)
+						  void *data) __uses_conditionally(dev->parent->mutex)
 {
 	int ret = 0;
 
