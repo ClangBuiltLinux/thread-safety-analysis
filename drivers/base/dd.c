@@ -900,7 +900,7 @@ void device_initial_probe(struct device *dev)
  * Normally this will just be the @dev lock, but when called for a USB
  * interface, @parent lock will be held as well.
  */
-static void __device_driver_lock(struct device *dev, struct device *parent)
+static void __device_driver_lock(struct device *dev, struct device *parent) __acquires_mutex(dev->mutex) __acquires_conditionally(parent->mutex)
 {
 	if (parent && dev->bus->need_parent_lock)
 		device_lock(parent);
@@ -916,7 +916,7 @@ static void __device_driver_lock(struct device *dev, struct device *parent)
  * Normally this will just be the the @dev lock, but when called for a
  * USB interface, @parent lock will be released as well.
  */
-static void __device_driver_unlock(struct device *dev, struct device *parent)
+static void __device_driver_unlock(struct device *dev, struct device *parent) __releases_mutex(dev->mutex) __releases_conditionally(parent->mutex)
 {
 	device_unlock(dev);
 	if (parent && dev->bus->need_parent_lock)
