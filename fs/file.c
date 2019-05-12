@@ -790,7 +790,7 @@ unsigned long __fdget_raw(unsigned int fd)
 	return __fget_light(fd, 0);
 }
 
-unsigned long __fdget_pos(unsigned int fd)
+unsigned long __fdget_pos(unsigned int fd) __acquires_conditionally()
 {
 	unsigned long v = __fdget(fd);
 	struct file *file = (struct file *)(v & ~3);
@@ -804,7 +804,7 @@ unsigned long __fdget_pos(unsigned int fd)
 	return v;
 }
 
-void __f_unlock_pos(struct file *f)
+void __f_unlock_pos(struct file *f) __releases_conditionally(f->f_pos_lock)
 {
 	mutex_unlock(&f->f_pos_lock);
 }
