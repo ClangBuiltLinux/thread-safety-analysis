@@ -2767,7 +2767,7 @@ static void drain_local_pages_wq(struct work_struct *work)
  *
  * Note that this can be extremely slow as the draining happens in a workqueue.
  */
-void drain_all_pages(struct zone *zone)
+void drain_all_pages(struct zone *zone) __uses_retry_acquires(pcpu_drain_mutex)
 {
 	int cpu;
 
