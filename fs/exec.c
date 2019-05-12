@@ -1415,7 +1415,7 @@ static int prepare_bprm_creds(struct linux_binprm *bprm)
 	return -ENOMEM;
 }
 
-static void free_bprm(struct linux_binprm *bprm)
+static void free_bprm(struct linux_binprm *bprm) __releases_conditionally(current->signal->cred_guard_mutex)
 {
 	free_arg_pages(bprm);
 	if (bprm->cred) {
