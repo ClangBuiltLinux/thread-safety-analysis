@@ -249,7 +249,7 @@ static void __sched __mutex_lock_slowpath(struct mutex *lock);
  *
  * This function is similar to (but not equivalent to) down().
  */
-void __sched mutex_lock(struct mutex *lock)
+void __sched mutex_lock(struct mutex *lock) __no_thread_safety_analysis
 {
 	might_sleep();
 
@@ -704,7 +704,7 @@ static noinline void __sched __mutex_unlock_slowpath(struct mutex *lock, unsigne
  *
  * This function is similar to (but not equivalent to) up().
  */
-void __sched mutex_unlock(struct mutex *lock)
+void __sched mutex_unlock(struct mutex *lock) __no_thread_safety_analysis
 {
 #ifndef CONFIG_DEBUG_LOCK_ALLOC
 	if (__mutex_unlock_fast(lock))
