@@ -258,17 +258,25 @@
  * TODO Link
  * Only provided by clang.
  * Naming for now: name the locking primitive, although irrelevant for analysis.
+ * name the lock that is hold conditionally to allow later analysis to use that
+ * information.
  */
 #if __has_attribute(capability)
 # define __acquires_mutex(x)            __attribute__((acquire_capability(x)))
 # define __releases_mutex(x)            __attribute__((release_capability(x)))
 # define __try_acquires_mutex(r, x)     __attribute__((try_acquire_capability(r, x)))
 # define __requires_mutex(x)            __attribute__((requires_capability(x)))
+# define __uses_conditionally(x)        __attribute__((no_thread_safety_analysis))
+# define __acquires_conditionally(x)    __attribute__((no_thread_safety_analysis))
+# define __releases_conditionally(x)    __attribute__((no_thread_safety_analysis))
 #else
 # define __acquires_mutex(x)
 # define __releases_mutex(x)
 # define __try_acquires_mutex(r, x)
 # define __requires_mutex(x)
+# define __uses_conditionally(x)
+# define __acquires_conditionally(x)
+# define __releases_conditionally(x)
 #endif
 
 #endif /* __LINUX_COMPILER_ATTRIBUTES_H */
