@@ -1447,7 +1447,7 @@ EXPORT_SYMBOL(bprm_change_interp);
 /*
  * install the new credentials for this executable
  */
-void install_exec_creds(struct linux_binprm *bprm)
+void install_exec_creds(struct linux_binprm *bprm) __releases_mutex(current->signal->cred_guard_mutex)
 {
 	security_bprm_committing_creds(bprm);
 
