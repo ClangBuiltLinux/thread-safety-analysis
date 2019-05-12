@@ -269,6 +269,7 @@
 # define __uses_conditionally(x)        __attribute__((no_thread_safety_analysis))
 # define __acquires_conditionally(x)    __attribute__((no_thread_safety_analysis))
 # define __releases_conditionally(x)    __attribute__((no_thread_safety_analysis))
+# define __no_thread_safety_analysis    __attribute__((no_thread_safety_analysis))
 #else
 # define __acquires_mutex(x)
 # define __releases_mutex(x)
@@ -277,6 +278,7 @@
 # define __uses_conditionally(x)
 # define __acquires_conditionally(x)
 # define __releases_conditionally(x)
+# define __no_thread_safety_analysis
 #endif
 
 #endif /* __LINUX_COMPILER_ATTRIBUTES_H */
