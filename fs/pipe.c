@@ -78,12 +78,12 @@ void pipe_unlock(struct pipe_inode_info *pipe)
 }
 EXPORT_SYMBOL(pipe_unlock);
 
-static inline void __pipe_lock(struct pipe_inode_info *pipe)
+static inline void __pipe_lock(struct pipe_inode_info *pipe) __acquires_mutex(pipe->mutex)
 {
 	mutex_lock_nested(&pipe->mutex, I_MUTEX_PARENT);
 }
 
-static inline void __pipe_unlock(struct pipe_inode_info *pipe)
+static inline void __pipe_unlock(struct pipe_inode_info *pipe) __releases_mutex(pipe->mutex)
 {
 	mutex_unlock(&pipe->mutex);
 }
