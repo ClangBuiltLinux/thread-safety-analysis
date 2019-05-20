@@ -484,7 +484,7 @@ static void *cgroup_pidlist_start(struct seq_file *s, loff_t *pos)
 	return iter;
 }
 
-static void cgroup_pidlist_stop(struct seq_file *s, void *v)
+static void cgroup_pidlist_stop(struct seq_file *s, void *v) __releases_mutex(seq_css(s)->cgroup->pidlist_mutex)
 {
 	struct kernfs_open_file *of = s->private;
 	struct cgroup_pidlist *l = of->priv;
