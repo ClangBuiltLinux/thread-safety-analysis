@@ -367,7 +367,7 @@ success:
 }
 EXPORT_SYMBOL(iosf_mbi_block_punit_i2c_access);
 
-void iosf_mbi_unblock_punit_i2c_access(void)
+void iosf_mbi_unblock_punit_i2c_access(void) __releases_conditionally(iosf_mbi_punit_mutex)
 {
 	mutex_lock(&iosf_mbi_block_punit_i2c_access_count_mutex);
 
