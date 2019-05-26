@@ -63,7 +63,7 @@ struct mutex {
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
 	struct lockdep_map	dep_map;
 #endif
-} __attribute__((capability("mutex")));
+} __capability("mutex");
 
 /*
  * Internal helper function; C doesn't allow us to hide it :/

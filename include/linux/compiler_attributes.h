@@ -262,6 +262,7 @@
  * information.
  */
 #if __has_attribute(capability)
+# define __capability(x)                __attribute__((capability(x)))
 # define __acquires_mutex(x)            __attribute__((acquire_capability(x)))
 # define __releases_mutex(x)            __attribute__((release_capability(x)))
 # define __try_acquires_mutex(r, x)     __attribute__((try_acquire_capability(r, x)))
@@ -272,6 +273,7 @@
 # define __uses_retry_acquires(x)       __attribute__((no_thread_safety_analysis))
 # define __no_thread_safety_analysis    __attribute__((no_thread_safety_analysis))
 #else
+# define __capability(x)
 # define __acquires_mutex(x)
 # define __releases_mutex(x)
 # define __try_acquires_mutex(r, x)
