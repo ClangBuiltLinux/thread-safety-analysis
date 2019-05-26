@@ -10693,7 +10693,7 @@ static int perf_event_set_clock(struct perf_event *event, clockid_t clk_id)
  */
 static struct perf_event_context *
 __perf_event_ctx_lock_double(struct perf_event *group_leader,
-			     struct perf_event_context *ctx)
+			     struct perf_event_context *ctx) __acquires_mutex(ctx->mutex)
 {
 	struct perf_event_context *gctx;
 
