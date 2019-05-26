@@ -50,7 +50,7 @@ struct inet_diag_entry {
 
 static DEFINE_MUTEX(inet_diag_table_mutex);
 
-static const struct inet_diag_handler *inet_diag_lock_handler(int proto)
+static const struct inet_diag_handler *inet_diag_lock_handler(int proto) __acquires_mutex(inet_diag_table_mutex)
 {
 	if (!inet_diag_table[proto])
 		sock_load_diag_module(AF_INET, proto);
@@ -62,7 +62,7 @@ static const struct inet_diag_handler *inet_diag_lock_handler(int proto)
 	return inet_diag_table[proto];
 }
 
-static void inet_diag_unlock_handler(const struct inet_diag_handler *handler)
+static void inet_diag_unlock_handler(const struct inet_diag_handler *handler) __releases_mutex(inet_diag_table_mutex)
 {
 	mutex_unlock(&inet_diag_table_mutex);
 }
