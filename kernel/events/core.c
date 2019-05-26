@@ -1262,7 +1262,7 @@ static void put_ctx(struct perf_event_context *ctx)
  *	  cpuctx->mutex / perf_event_context::mutex
  */
 static struct perf_event_context *
-perf_event_ctx_lock_nested(struct perf_event *event, int nesting)
+perf_event_ctx_lock_nested(struct perf_event *event, int nesting) __no_thread_safety_analysis
 {
 	struct perf_event_context *ctx;
 
@@ -1292,7 +1292,7 @@ perf_event_ctx_lock(struct perf_event *event)
 }
 
 static void perf_event_ctx_unlock(struct perf_event *event,
-				  struct perf_event_context *ctx)
+				  struct perf_event_context *ctx) __no_thread_safety_analysis
 {
 	mutex_unlock(&ctx->mutex);
 	put_ctx(ctx);
