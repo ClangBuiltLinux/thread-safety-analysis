@@ -3889,7 +3889,7 @@ static inline u32 netif_msg_init(int debug_value, int default_msg_enable_bits)
 	return (1U << debug_value) - 1;
 }
 
-static inline void __netif_tx_lock(struct netdev_queue *txq, int cpu)
+static inline void __netif_tx_lock(struct netdev_queue *txq, int cpu) __acquires_spinlock(&txq->_xmit_lock)
 {
 	spin_lock(&txq->_xmit_lock);
 	txq->xmit_lock_owner = cpu;
@@ -3920,7 +3920,7 @@ static inline bool __netif_tx_trylock(struct netdev_queue *txq)
 	return ok;
 }
 
-static inline void __netif_tx_unlock(struct netdev_queue *txq)
+static inline void __netif_tx_unlock(struct netdev_queue *txq) __releases_spinlock(&txq->_xmit_lock)
 {
 	txq->xmit_lock_owner = -1;
 	spin_unlock(&txq->_xmit_lock);
