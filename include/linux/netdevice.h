@@ -4042,7 +4042,7 @@ static inline void netif_tx_disable(struct net_device *dev)
 	local_bh_enable();
 }
 
-static inline void netif_addr_lock(struct net_device *dev)
+static inline void netif_addr_lock(struct net_device *dev) __acquires_spinlock(&dev->addr_list_lock)
 {
 	spin_lock(&dev->addr_list_lock);
 }
@@ -4062,7 +4062,7 @@ static inline void netif_addr_lock_bh(struct net_device *dev)
 	spin_lock_bh(&dev->addr_list_lock);
 }
 
-static inline void netif_addr_unlock(struct net_device *dev)
+static inline void netif_addr_unlock(struct net_device *dev) __releases_spinlock(&dev->addr_list_lock)
 {
 	spin_unlock(&dev->addr_list_lock);
 }
