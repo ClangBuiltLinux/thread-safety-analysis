@@ -333,7 +333,7 @@ do {							\
 	raw_spin_lock_init(&(_lock)->rlock);		\
 } while (0)
 
-static __always_inline void spin_lock(spinlock_t *lock)
+static __always_inline void spin_lock(spinlock_t *lock) __acquires_spinlock(*lock) __no_thread_safety_analysis
 {
 	raw_spin_lock(&lock->rlock);
 }
@@ -373,7 +373,7 @@ do {									\
 	raw_spin_lock_irqsave_nested(spinlock_check(lock), flags, subclass); \
 } while (0)
 
-static __always_inline void spin_unlock(spinlock_t *lock)
+static __always_inline void spin_unlock(spinlock_t *lock) __releases_spinlock(*lock) __no_thread_safety_analysis
 {
 	raw_spin_unlock(&lock->rlock);
 }

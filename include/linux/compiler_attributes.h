@@ -253,4 +253,25 @@
  */
 #define __weak                          __attribute__((__weak__))
 
+/*
+ * Clang Thread Safety Analysis
+ * https://clang.llvm.org/docs/ThreadSafetyAnalysis.html
+ */
+
+#if __has_attribute(capability)
+# define __capability(x)			__attribute__((capability(x)))
+# define __acquires_spinlock(x)			__attribute__((acquire_capability(x)))
+# define __releases_spinlock(x)			__attribute__((release_capability(x)))
+# define __try_acquires_spinlock(r, x)		__attribute__((try_acquire_capability(r, x)))
+# define __no_thread_safety_analysis		__attribute__((no_thread_safety_analysis))
+# define __conditional_locking			__attribute__((no_thread_safety_analysis))
+# define __conditional_unlocking		__attribute__((no_thread_safety_analysis))
+# define __return_capability(x)			__attribute__((lock_returned(x)))
+#else
+# define __acquires_spinlock(x)
+# define __releases_spinlock(x)
+# define __try_acquires_spinlock(r, x)
+# define __no_thread_safety_analysis
+#endif
+
 #endif /* __LINUX_COMPILER_ATTRIBUTES_H */

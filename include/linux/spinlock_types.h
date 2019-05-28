@@ -70,7 +70,7 @@ typedef struct spinlock {
 		};
 #endif
 	};
-} spinlock_t;
+} spinlock_t __capability("role");
 
 #define __SPIN_LOCK_INITIALIZER(lockname) \
 	{ { .rlock = __RAW_SPIN_LOCK_INITIALIZER(lockname) } }
