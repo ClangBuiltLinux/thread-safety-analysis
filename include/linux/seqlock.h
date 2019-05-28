@@ -523,7 +523,7 @@ static inline void read_sequnlock_excl(seqlock_t *sl) __releases_spinlock(&sl->l
  * whether to be a reader (even) or writer (odd).
  * N.B. seq must be initialized to an even number to begin with.
  */
-static inline void read_seqbegin_or_lock(seqlock_t *lock, int *seq)
+static inline void read_seqbegin_or_lock(seqlock_t *lock, int *seq) __conditional_locking
 {
 	if (!(*seq & 1))	/* Even */
 		*seq = read_seqbegin(lock);
@@ -536,7 +536,7 @@ static inline int need_seqretry(seqlock_t *lock, int seq)
 	return !(seq & 1) && read_seqretry(lock, seq);
 }
 
-static inline void done_seqretry(seqlock_t *lock, int seq)
+static inline void done_seqretry(seqlock_t *lock, int seq) __conditional_unlocking
 {
 	if (seq & 1)
 		read_sequnlock_excl(lock);
