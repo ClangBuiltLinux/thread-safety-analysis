@@ -143,12 +143,12 @@ static inline struct vm_struct *task_stack_vm_area(const struct task_struct *t)
  * It must not be nested with write_lock_irq(&tasklist_lock),
  * neither inside nor outside.
  */
-static inline void task_lock(struct task_struct *p)
+static inline void task_lock(struct task_struct *p) __acquires_spinlock(&p->alloc_lock)
 {
 	spin_lock(&p->alloc_lock);
 }
 
-static inline void task_unlock(struct task_struct *p)
+static inline void task_unlock(struct task_struct *p) __releases_spinlock(&p->alloc_lock)
 {
 	spin_unlock(&p->alloc_lock);
 }
