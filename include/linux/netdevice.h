@@ -3953,7 +3953,7 @@ static inline void netif_trans_update(struct net_device *dev)
  *
  * Get network device transmit lock
  */
-static inline void netif_tx_lock(struct net_device *dev)
+static inline void netif_tx_lock(struct net_device *dev) __acquires_spinlock(&dev->tx_global_lock)
 {
 	unsigned int i;
 	int cpu;
@@ -3981,7 +3981,7 @@ static inline void netif_tx_lock_bh(struct net_device *dev)
 	netif_tx_lock(dev);
 }
 
-static inline void netif_tx_unlock(struct net_device *dev)
+static inline void netif_tx_unlock(struct net_device *dev) __releases_spinlock(&dev->tx_global_lock)
 {
 	unsigned int i;
 
