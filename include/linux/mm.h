@@ -2077,7 +2077,7 @@ static inline void pgtable_pmd_page_dtor(struct page *page) {}
 
 #endif
 
-static inline spinlock_t *pmd_lock(struct mm_struct *mm, pmd_t *pmd)
+static inline spinlock_t *pmd_lock(struct mm_struct *mm, pmd_t *pmd) __no_thread_safety_analysis
 {
 	spinlock_t *ptl = pmd_lockptr(mm, pmd);
 	spin_lock(ptl);
@@ -2095,7 +2095,7 @@ static inline spinlock_t *pud_lockptr(struct mm_struct *mm, pud_t *pud)
 	return &mm->page_table_lock;
 }
 
-static inline spinlock_t *pud_lock(struct mm_struct *mm, pud_t *pud)
+static inline spinlock_t *pud_lock(struct mm_struct *mm, pud_t *pud) __no_thread_safety_analysis
 {
 	spinlock_t *ptl = pud_lockptr(mm, pud);
 
