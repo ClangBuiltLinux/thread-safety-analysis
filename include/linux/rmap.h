@@ -212,7 +212,7 @@ struct page_vma_mapped_walk {
 	unsigned int flags;
 };
 
-static inline void page_vma_mapped_walk_done(struct page_vma_mapped_walk *pvmw)
+static inline void page_vma_mapped_walk_done(struct page_vma_mapped_walk *pvmw) __conditional_unlocking
 {
 	if (pvmw->pte)
 		pte_unmap(pvmw->pte);
