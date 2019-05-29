@@ -354,7 +354,8 @@ static void dentry_free(struct dentry *dentry)
  * Release the dentry's inode, using the filesystem
  * d_iput() operation if defined.
  */
-static void dentry_unlink_inode(struct dentry * dentry)
+static void dentry_unlink_inode(struct dentry * dentry) 
+	__releases_spinlock(&dentry->d_lock)
 	__releases(dentry->d_lock)
 	__releases(dentry->d_inode->i_lock)
 {
