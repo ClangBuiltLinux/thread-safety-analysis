@@ -3975,7 +3975,7 @@ static inline void netif_tx_lock(struct net_device *dev) __acquires_spinlock(&de
 	}
 }
 
-static inline void netif_tx_lock_bh(struct net_device *dev)
+static inline void netif_tx_lock_bh(struct net_device *dev) __acquires_spinlock(&dev->tx_global_lock)
 {
 	local_bh_disable();
 	netif_tx_lock(dev);
@@ -3998,7 +3998,7 @@ static inline void netif_tx_unlock(struct net_device *dev) __releases_spinlock(&
 	spin_unlock(&dev->tx_global_lock);
 }
 
-static inline void netif_tx_unlock_bh(struct net_device *dev)
+static inline void netif_tx_unlock_bh(struct net_device *dev) __releases_spinlock(&dev->tx_global_lock)
 {
 	netif_tx_unlock(dev);
 	local_bh_enable();
