@@ -172,7 +172,7 @@ static inline bool qdisc_run_begin(struct Qdisc *qdisc)
 	return true;
 }
 
-static inline void qdisc_run_end(struct Qdisc *qdisc)
+static inline void qdisc_run_end(struct Qdisc *qdisc) __no_thread_safety_analysis
 {
 	write_seqcount_end(&qdisc->running);
 	if (qdisc->flags & TCQ_F_NOLOCK)
