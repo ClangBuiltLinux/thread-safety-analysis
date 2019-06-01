@@ -707,7 +707,7 @@ void __init init_mem_mapping(void)
  * Initialize an mm_struct to be used during poking and a pointer to be used
  * during patching.
  */
-void __init poking_init(void)
+void __init poking_init(void) __no_thread_safety_analysis
 {
 	spinlock_t *ptl;
 	pte_t *ptep;
