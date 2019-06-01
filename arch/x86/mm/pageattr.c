@@ -1605,7 +1605,7 @@ static int cpa_process_alias(struct cpa_data *cpa)
 	return 0;
 }
 
-static int __change_page_attr_set_clr(struct cpa_data *cpa, int checkalias)
+static int __change_page_attr_set_clr(struct cpa_data *cpa, int checkalias) __no_thread_safety_analysis
 {
 	unsigned long numpages = cpa->numpages;
 	unsigned long rempages = numpages;
