@@ -1033,7 +1033,7 @@ __split_large_page(struct cpa_data *cpa, pte_t *kpte, unsigned long address,
 }
 
 static int split_large_page(struct cpa_data *cpa, pte_t *kpte,
-			    unsigned long address)
+			    unsigned long address) __no_thread_safety_analysis
 {
 	struct page *base;
 
