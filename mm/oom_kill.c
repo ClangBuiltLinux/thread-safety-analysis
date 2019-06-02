@@ -202,7 +202,7 @@ static bool is_dump_unreclaim_slabs(void)
  * task consuming the most memory to avoid subsequent oom failures.
  */
 unsigned long oom_badness(struct task_struct *p, struct mem_cgroup *memcg,
-			  const nodemask_t *nodemask, unsigned long totalpages)
+			  const nodemask_t *nodemask, unsigned long totalpages) __conditional_unlocking
 {
 	long points;
 	long adj;
