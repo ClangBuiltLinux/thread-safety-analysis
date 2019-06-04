@@ -32,7 +32,7 @@ static inline unsigned int xa_lock_type(const struct xarray *xa)
 	return (__force unsigned int)xa->xa_flags & 3;
 }
 
-static inline void xas_lock_type(struct xa_state *xas, unsigned int lock_type)
+static inline void xas_lock_type(struct xa_state *xas, unsigned int lock_type) __conditional_locking
 {
 	if (lock_type == XA_LOCK_IRQ)
 		xas_lock_irq(xas);
