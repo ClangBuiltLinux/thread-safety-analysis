@@ -402,7 +402,7 @@ void free_pgtables(struct mmu_gather *tlb, struct vm_area_struct *vma,
 	}
 }
 
-int __pte_alloc(struct mm_struct *mm, pmd_t *pmd)
+int __pte_alloc(struct mm_struct *mm, pmd_t *pmd) __no_thread_safety_analysis
 {
 	spinlock_t *ptl;
 	pgtable_t new = pte_alloc_one(mm);
