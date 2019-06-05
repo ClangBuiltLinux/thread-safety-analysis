@@ -2005,14 +2005,14 @@ static inline void pgtable_page_dtor(struct page *page)
 	dec_zone_page_state(page, NR_PAGETABLE);
 }
 
-#define pte_offset_map_lock(mm, pmd, address, ptlp)	\
-({							\
-	spinlock_t *__ptl = pte_lockptr(mm, pmd);	\
-	pte_t *__pte = pte_offset_map(pmd, address);	\
-	*(ptlp) = __ptl;				\
-	spin_lock(__ptl);				\
-	__pte;						\
-})
+static inline pte_t * __maybe_unused pte_offset_map_lock(struct mm_struct *mm, pmd_t *pmd, unsigned long address, spinlock_t **ptlp) __acquires_spinlock(**ptlp) __no_thread_safety_analysis
+{
+	spinlock_t *__ptl = pte_lockptr(mm, pmd);
+	pte_t *__pte = pte_offset_map(pmd, address);
+	*(ptlp) = __ptl;
+	spin_lock(__ptl);
+	return __pte;
+}
 
 #define pte_unmap_unlock(pte, ptl)	do {		\
 	spin_unlock(ptl);				\
