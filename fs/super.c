@@ -378,7 +378,7 @@ EXPORT_SYMBOL(deactivate_super);
  *	called for superblocks not in rundown mode (== ones still on ->fs_supers
  *	of their type), so increment of ->s_count is OK here.
  */
-static int grab_super(struct super_block *s) __releases(sb_lock)
+static int grab_super(struct super_block *s) __releases(sb_lock) __releases_spinlock(sb_lock)
 {
 	s->s_count++;
 	spin_unlock(&sb_lock);
