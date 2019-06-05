@@ -501,7 +501,7 @@ static int genl_lock_done(struct netlink_callback *cb)
 static int genl_family_rcv_msg(const struct genl_family *family,
 			       struct sk_buff *skb,
 			       struct nlmsghdr *nlh,
-			       struct netlink_ext_ack *extack)
+			       struct netlink_ext_ack *extack) __requires_conditionally(genl_mutex)
 {
 	const struct genl_ops *ops;
 	struct net *net = sock_net(skb->sk);
