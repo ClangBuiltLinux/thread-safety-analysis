@@ -263,6 +263,7 @@
 # define __acquires_spinlock(x)			__attribute__((acquire_capability(x)))
 # define __releases_spinlock(x)			__attribute__((release_capability(x)))
 # define __try_acquires_spinlock(r, x)		__attribute__((try_acquire_capability(r, x)))
+# define __requires_spinlock(x)        __attribute__((requires_capability(x)))
 # define __no_thread_safety_analysis		__attribute__((no_thread_safety_analysis))
 # define __conditional_locking			__attribute__((no_thread_safety_analysis))
 # define __conditional_unlocking		__attribute__((no_thread_safety_analysis))
