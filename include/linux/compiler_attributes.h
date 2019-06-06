@@ -267,6 +267,7 @@
 # define __conditional_locking			__attribute__((no_thread_safety_analysis))
 # define __conditional_unlocking		__attribute__((no_thread_safety_analysis))
 # define __return_capability(x)			__attribute__((lock_returned(x)))
+# define __requires_spinlock(x)			__attribute__((requires_capability(x)))
 #else
 # define __acquires_spinlock(x)
 # define __releases_spinlock(x)
