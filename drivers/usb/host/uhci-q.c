@@ -1514,7 +1514,7 @@ done:
  * Finish unlinking an URB and give it back
  */
 static void uhci_giveback_urb(struct uhci_hcd *uhci, struct uhci_qh *qh,
-		struct urb *urb, int status)
+		struct urb *urb, int status) __requires_spinlock(uhci->lock)
 __releases(uhci->lock)
 __acquires(uhci->lock)
 {
