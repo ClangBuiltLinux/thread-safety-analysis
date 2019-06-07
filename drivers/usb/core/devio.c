@@ -541,7 +541,7 @@ static int copy_urb_data_to_user(u8 __user *userbuffer, struct urb *urb)
 #define AS_UNLINK	2
 
 static void cancel_bulk_urbs(struct usb_dev_state *ps, unsigned bulk_addr)
-__releases(ps->lock)
+__releases(ps->lock) __requires_spinlock(ps->lock)
 __acquires(ps->lock)
 {
 	struct urb *urb;
