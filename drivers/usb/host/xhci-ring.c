@@ -629,7 +629,7 @@ static void xhci_stop_watchdog_timer_in_irq(struct xhci_hcd *xhci,
  * releases and re-acquires xhci->lock
  */
 static void xhci_giveback_urb_in_irq(struct xhci_hcd *xhci,
-				     struct xhci_td *cur_td, int status)
+				     struct xhci_td *cur_td, int status) __requires_spinlock(xhci->lock)
 {
 	struct urb	*urb		= cur_td->urb;
 	struct urb_priv	*urb_priv	= urb->hcpriv;
@@ -1551,7 +1551,7 @@ static void xhci_cavium_reset_phy_quirk(struct xhci_hcd *xhci)
 }
 
 static void handle_port_status(struct xhci_hcd *xhci,
-		union xhci_trb *event)
+		union xhci_trb *event) __requires_spinlock(xhci->lock)
 {
 	struct usb_hcd *hcd;
 	u32 port_id;
