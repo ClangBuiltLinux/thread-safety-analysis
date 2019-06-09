@@ -423,7 +423,7 @@ static int pidlist_array_load(struct cgroup *cgrp, enum cgroup_filetype type,
  * in the cgroup->l->list array.
  */
 
-static void *cgroup_pidlist_start(struct seq_file *s, loff_t *pos)
+static void *cgroup_pidlist_start(struct seq_file *s, loff_t *pos) __acquires_mutex(seq_css(s)->cgroup->pidlist_mutex) __no_thread_safety_analysis
 {
 	/*
 	 * Initially we receive a position value that corresponds to
