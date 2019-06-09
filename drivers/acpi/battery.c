@@ -683,7 +683,7 @@ static LIST_HEAD(acpi_battery_list);
 static LIST_HEAD(battery_hook_list);
 static DEFINE_MUTEX(hook_mutex);
 
-static void __battery_hook_unregister(struct acpi_battery_hook *hook, int lock)
+static void __battery_hook_unregister(struct acpi_battery_hook *hook, int lock) __uses_conditionally(hook_mutex)
 {
 	struct acpi_battery *battery;
 	/*
