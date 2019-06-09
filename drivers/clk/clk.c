@@ -112,7 +112,7 @@ static void clk_pm_runtime_put(struct clk_core *core)
 }
 
 /***           locking             ***/
-static void clk_prepare_lock(void)
+static void clk_prepare_lock(void) __acquires_mutex(prepare_lock) __no_thread_safety_analysis
 {
 	if (!mutex_trylock(&prepare_lock)) {
 		if (prepare_owner == current) {
@@ -127,7 +127,7 @@ static void clk_prepare_lock(void)
 	prepare_refcnt = 1;
 }
 
-static void clk_prepare_unlock(void)
+static void clk_prepare_unlock(void) __releases_mutex(prepare_lock) __no_thread_safety_analysis
 {
 	WARN_ON_ONCE(prepare_owner != current);
 	WARN_ON_ONCE(prepare_refcnt == 0);
