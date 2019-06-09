@@ -227,7 +227,7 @@ gss_mech_get_by_pseudoflavor(u32 pseudoflavor)
  * The returned array is not sorted by any policy.  Callers should not
  * rely on the order of the items in the returned array.
  */
-int gss_mech_list_pseudoflavors(rpc_authflavor_t *array_ptr, int size)
+int gss_mech_list_pseudoflavors(rpc_authflavor_t *array_ptr, int size) __conditional_unlocking
 {
 	struct gss_api_mech *pos = NULL;
 	int j, i = 0;
