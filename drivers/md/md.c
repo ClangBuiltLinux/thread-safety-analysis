@@ -2325,7 +2325,7 @@ static void export_array(struct mddev *mddev)
 	mddev->major_version = 0;
 }
 
-static bool set_in_sync(struct mddev *mddev)
+static bool set_in_sync(struct mddev *mddev) __requires_spinlock(mddev->lock)
 {
 	lockdep_assert_held(&mddev->lock);
 	if (!mddev->in_sync) {
