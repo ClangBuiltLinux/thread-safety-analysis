@@ -1496,7 +1496,7 @@ out:
 	return ret;
 }
 
-static struct rpc_rqst *xprt_dynamic_alloc_slot(struct rpc_xprt *xprt)
+static struct rpc_rqst *xprt_dynamic_alloc_slot(struct rpc_xprt *xprt) __requires_spinlock(xprt->reserve_lock)
 {
 	struct rpc_rqst *req = ERR_PTR(-EAGAIN);
 
