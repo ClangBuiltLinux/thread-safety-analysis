@@ -1425,7 +1425,7 @@ void dump_unreclaimable_slab(void)
 }
 
 #if defined(CONFIG_MEMCG)
-void *memcg_slab_start(struct seq_file *m, loff_t *pos)
+void *memcg_slab_start(struct seq_file *m, loff_t *pos) __acquires_mutex(slab_mutex)
 {
 	struct mem_cgroup *memcg = mem_cgroup_from_seq(m);
 
@@ -1440,7 +1440,7 @@ void *memcg_slab_next(struct seq_file *m, void *p, loff_t *pos)
 	return seq_list_next(p, &memcg->kmem_caches, pos);
 }
 
-void memcg_slab_stop(struct seq_file *m, void *p)
+void memcg_slab_stop(struct seq_file *m, void *p) __releases_mutex(slab_mutex)
 {
 	mutex_unlock(&slab_mutex);
 }
