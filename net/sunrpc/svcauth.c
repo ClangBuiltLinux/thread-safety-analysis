@@ -143,7 +143,7 @@ EXPORT_SYMBOL_GPL(svc_auth_unregister);
 static struct hlist_head	auth_domain_table[DN_HASHMAX];
 static DEFINE_SPINLOCK(auth_domain_lock);
 
-static void auth_domain_release(struct kref *kref)
+static void auth_domain_release(struct kref *kref) __releases_spinlock(auth_domain_lock)
 	__releases(&auth_domain_lock)
 {
 	struct auth_domain *dom = container_of(kref, struct auth_domain, ref);
