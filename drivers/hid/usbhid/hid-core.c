@@ -524,7 +524,7 @@ static void hid_ctrl(struct urb *urb)
 }
 
 static void __usbhid_submit_report(struct hid_device *hid, struct hid_report *report,
-				   unsigned char dir)
+				   unsigned char dir) __no_thread_safety_analysis
 {
 	int head;
 	struct usbhid_device *usbhid = hid->driver_data;
