@@ -327,7 +327,7 @@ static void register_prot_hook(struct sock *sk)
  * of po->prot_hook.  If the sync parameter is false, it is the
  * callers responsibility to take care of this.
  */
-static void __unregister_prot_hook(struct sock *sk, bool sync)
+static void __unregister_prot_hook(struct sock *sk, bool sync) __no_thread_safety_analysis
 {
 	struct packet_sock *po = pkt_sk(sk);
 
