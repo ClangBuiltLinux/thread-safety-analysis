@@ -302,7 +302,7 @@ static void proc_sys_prune_dcache(struct ctl_table_header *head)
 }
 
 /* called under sysctl_lock, will reacquire if has to wait */
-static void start_unregistering(struct ctl_table_header *p)
+static void start_unregistering(struct ctl_table_header *p) __requires_spinlock(sysctl_lock)
 {
 	/*
 	 * if p->used is 0, nobody will ever touch that entry again;
