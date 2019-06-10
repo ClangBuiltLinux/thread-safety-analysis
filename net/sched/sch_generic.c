@@ -50,7 +50,7 @@ EXPORT_SYMBOL(default_qdisc_ops);
  * - updates to tree and tree walking are only done under the rtnl mutex.
  */
 
-static inline struct sk_buff *__skb_dequeue_bad_txq(struct Qdisc *q)
+static inline struct sk_buff *__skb_dequeue_bad_txq(struct Qdisc *q) __conditional_unlocking
 {
 	const struct netdev_queue *txq = q->dev_queue;
 	spinlock_t *lock = NULL;
@@ -96,7 +96,7 @@ static inline struct sk_buff *qdisc_dequeue_skb_bad_txq(struct Qdisc *q)
 }
 
 static inline void qdisc_enqueue_skb_bad_txq(struct Qdisc *q,
-					     struct sk_buff *skb)
+					     struct sk_buff *skb) __conditional_unlocking
 {
 	spinlock_t *lock = NULL;
 
@@ -119,7 +119,7 @@ static inline void qdisc_enqueue_skb_bad_txq(struct Qdisc *q,
 		spin_unlock(lock);
 }
 
-static inline void dev_requeue_skb(struct sk_buff *skb, struct Qdisc *q)
+static inline void dev_requeue_skb(struct sk_buff *skb, struct Qdisc *q) __conditional_unlocking
 {
 	spinlock_t *lock = NULL;
 
@@ -202,7 +202,7 @@ static void try_bulk_dequeue_skb_slow(struct Qdisc *q,
  * A requeued skb (via q->gso_skb) can also be a SKB list.
  */
 static struct sk_buff *dequeue_skb(struct Qdisc *q, bool *validate,
-				   int *packets)
+				   int *packets) __conditional_unlocking
 {
 	const struct netdev_queue *txq = q->dev_queue;
 	struct sk_buff *skb = NULL;
@@ -283,7 +283,7 @@ trace:
  */
 bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
 		     struct net_device *dev, struct netdev_queue *txq,
-		     spinlock_t *root_lock, bool validate)
+		     spinlock_t *root_lock, bool validate) __conditional_unlocking
 {
 	int ret = NETDEV_TX_BUSY;
 	bool again = false;
