@@ -1407,7 +1407,7 @@ static void udp_skb_dtor_locked(struct sock *sk, struct sk_buff *skb)
 static int udp_busylocks_log __read_mostly;
 static spinlock_t *udp_busylocks __read_mostly;
 
-static spinlock_t *busylock_acquire(void *ptr)
+static spinlock_t *busylock_acquire(void *ptr) __no_thread_safety_analysis
 {
 	spinlock_t *busy;
 
