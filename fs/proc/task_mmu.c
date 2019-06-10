@@ -574,7 +574,7 @@ static void smaps_pmd_entry(pmd_t *pmd, unsigned long addr,
 #endif
 
 static int smaps_pte_range(pmd_t *pmd, unsigned long addr, unsigned long end,
-			   struct mm_walk *walk)
+			   struct mm_walk *walk) __no_thread_safety_analysis
 {
 	struct vm_area_struct *vma = walk->vma;
 	pte_t *pte;
@@ -997,7 +997,7 @@ static inline void clear_soft_dirty_pmd(struct vm_area_struct *vma,
 #endif
 
 static int clear_refs_pte_range(pmd_t *pmd, unsigned long addr,
-				unsigned long end, struct mm_walk *walk)
+				unsigned long end, struct mm_walk *walk) __no_thread_safety_analysis
 {
 	struct clear_refs_private *cp = walk->private;
 	struct vm_area_struct *vma = walk->vma;
