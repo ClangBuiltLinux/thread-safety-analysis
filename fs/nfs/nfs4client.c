@@ -491,7 +491,7 @@ static bool nfs4_same_verifier(nfs4_verifier *v1, nfs4_verifier *v2)
 }
 
 static int nfs4_match_client(struct nfs_client  *pos,  struct nfs_client *new,
-			     struct nfs_client **prev, struct nfs_net *nn)
+			     struct nfs_client **prev, struct nfs_net *nn) __requires_spinlock(nn->nfs_client_lock)
 {
 	int status;
 
