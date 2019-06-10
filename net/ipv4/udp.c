@@ -1338,7 +1338,7 @@ static bool udp_skb_has_head_state(struct sk_buff *skb)
 
 /* fully reclaim rmem/fwd memory allocated for skb */
 static void udp_rmem_release(struct sock *sk, int size, int partial,
-			     bool rx_queue_lock_held)
+			     bool rx_queue_lock_held) __conditional_locking
 {
 	struct udp_sock *up = udp_sk(sk);
 	struct sk_buff_head *sk_queue;
