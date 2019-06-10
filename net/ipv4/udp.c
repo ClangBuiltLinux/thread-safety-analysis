@@ -1416,7 +1416,7 @@ static spinlock_t *busylock_acquire(void *ptr) __no_thread_safety_analysis
 	return busy;
 }
 
-static void busylock_release(spinlock_t *busy)
+static void busylock_release(spinlock_t *busy) __conditional_unlocking
 {
 	if (busy)
 		spin_unlock(busy);
