@@ -272,7 +272,7 @@ static bool sync_exp_work_done(unsigned long s)
  * with the mutex held, indicating that the caller must actually do the
  * expedited grace period.
  */
-static bool exp_funnel_lock(unsigned long s)
+static bool exp_funnel_lock(unsigned long s) __try_acquires_mutex(false, rcu_state.exp_mutex)
 {
 	struct rcu_data *rdp = per_cpu_ptr(&rcu_data, raw_smp_processor_id());
 	struct rcu_node *rnp = rdp->mynode;
