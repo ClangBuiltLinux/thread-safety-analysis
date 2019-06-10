@@ -225,7 +225,7 @@ static inline struct sock *icmp_xmit_lock(struct net *net)
 	return sk;
 }
 
-static inline void icmp_xmit_unlock(struct sock *sk)
+static inline void icmp_xmit_unlock(struct sock *sk) __releases_spinlock(sk->sk_lock.slock)
 {
 	spin_unlock(&sk->sk_lock.slock);
 }
