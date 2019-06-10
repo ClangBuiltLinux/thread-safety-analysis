@@ -2848,7 +2848,7 @@ void show_fd_locks(struct seq_file *f,
 }
 
 static void *locks_start(struct seq_file *f, loff_t *pos)
-	__acquires(&blocked_lock_lock)
+	__acquires(&blocked_lock_lock) __acquires_spinlock(blocked_lock_lock)
 {
 	struct locks_iterator *iter = f->private;
 
@@ -2867,7 +2867,7 @@ static void *locks_next(struct seq_file *f, void *v, loff_t *pos)
 }
 
 static void locks_stop(struct seq_file *f, void *v)
-	__releases(&blocked_lock_lock)
+	__releases(&blocked_lock_lock) __releases_spinlock(blocked_lock_lock)
 {
 	spin_unlock(&blocked_lock_lock);
 	percpu_up_write(&file_rwsem);
