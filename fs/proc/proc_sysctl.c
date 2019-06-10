@@ -1222,7 +1222,7 @@ static bool get_links(struct ctl_dir *dir,
 	return true;
 }
 
-static int insert_links(struct ctl_table_header *head)
+static int insert_links(struct ctl_table_header *head) __requires_spinlock(sysctl_lock)
 {
 	struct ctl_table_set *root_set = &sysctl_table_root.default_set;
 	struct ctl_dir *core_parent = NULL;
