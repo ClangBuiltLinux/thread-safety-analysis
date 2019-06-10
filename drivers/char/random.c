@@ -2368,7 +2368,7 @@ EXPORT_SYMBOL(get_random_u32);
  * be stored before the crng is initialized, which we can do lazily by
  * simply resetting the counter to zero so that it's re-extracted on the
  * next usage. */
-static void invalidate_batched_entropy(void)
+static void invalidate_batched_entropy(void) __no_thread_safety_analysis
 {
 	int cpu;
 	unsigned long flags;
