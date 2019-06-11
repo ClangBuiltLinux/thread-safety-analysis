@@ -1572,8 +1572,8 @@ static void nfs_clear_open_stateid(struct nfs4_state *state,
 
 static void nfs_set_open_stateid_locked(struct nfs4_state *state,
 		const nfs4_stateid *stateid, nfs4_stateid *freeme)
-	__must_hold(&state->owner->so_lock)
-	__must_hold(&state->seqlock)
+	__must_hold(&state->owner->so_lock) __requires_spinlock(state->owner->so_lock)
+	__must_hold(&state->seqlock) __requires_spinlock(state->seqlock.lock)
 	__must_hold(RCU)
 
 {
