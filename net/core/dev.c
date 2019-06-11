@@ -3469,7 +3469,7 @@ static void qdisc_pkt_len_init(struct sk_buff *skb)
 
 static inline int __dev_xmit_skb(struct sk_buff *skb, struct Qdisc *q,
 				 struct net_device *dev,
-				 struct netdev_queue *txq)
+				 struct netdev_queue *txq) __conditional_locking
 {
 	spinlock_t *root_lock = qdisc_lock(q);
 	struct sk_buff *to_free = NULL;
