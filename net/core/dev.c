@@ -218,14 +218,14 @@ static inline struct hlist_head *dev_index_hash(struct net *net, int ifindex)
 	return &net->dev_index_head[ifindex & (NETDEV_HASHENTRIES - 1)];
 }
 
-static inline void rps_lock(struct softnet_data *sd)
+static inline void rps_lock(struct softnet_data *sd) __acquires_spinlock(sd->input_pkt_queue.lock)
 {
 #ifdef CONFIG_RPS
 	spin_lock(&sd->input_pkt_queue.lock);
 #endif
 }
 
-static inline void rps_unlock(struct softnet_data *sd)
+static inline void rps_unlock(struct softnet_data *sd) __releases_spinlock(sd->input_pkt_queue.lock)
 {
 #ifdef CONFIG_RPS
 	spin_unlock(&sd->input_pkt_queue.lock);
