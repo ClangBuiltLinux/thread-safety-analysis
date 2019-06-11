@@ -64,7 +64,7 @@ struct net_rate_estimator {
 };
 
 static void est_fetch_counters(struct net_rate_estimator *e,
-			       struct gnet_stats_basic_packed *b)
+			       struct gnet_stats_basic_packed *b) __conditional_locking
 {
 	memset(b, 0, sizeof(*b));
 	if (e->stats_lock)
