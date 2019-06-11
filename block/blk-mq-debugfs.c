@@ -371,7 +371,7 @@ int blk_mq_debugfs_rq_show(struct seq_file *m, void *v)
 EXPORT_SYMBOL_GPL(blk_mq_debugfs_rq_show);
 
 static void *hctx_dispatch_start(struct seq_file *m, loff_t *pos)
-	__acquires(&hctx->lock)
+	__acquires(&hctx->lock) __no_thread_safety_analysis
 {
 	struct blk_mq_hw_ctx *hctx = m->private;
 
@@ -387,7 +387,7 @@ static void *hctx_dispatch_next(struct seq_file *m, void *v, loff_t *pos)
 }
 
 static void hctx_dispatch_stop(struct seq_file *m, void *v)
-	__releases(&hctx->lock)
+	__releases(&hctx->lock) __no_thread_safety_analysis
 {
 	struct blk_mq_hw_ctx *hctx = m->private;
 
