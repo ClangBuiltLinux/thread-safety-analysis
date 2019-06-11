@@ -279,7 +279,7 @@ EXPORT_SYMBOL_GPL(nfs_put_client);
  * Find an nfs_client on the list that matches the initialisation data
  * that is supplied.
  */
-static struct nfs_client *nfs_match_client(const struct nfs_client_initdata *data)
+static struct nfs_client *nfs_match_client(const struct nfs_client_initdata *data) __no_thread_safety_analysis
 {
 	struct nfs_client *clp;
 	const struct sockaddr *sap = data->addr;
