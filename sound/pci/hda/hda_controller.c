@@ -1110,7 +1110,7 @@ EXPORT_SYMBOL_GPL(azx_stop_chip);
 /*
  * interrupt handler
  */
-static void stream_update(struct hdac_bus *bus, struct hdac_stream *s)
+static void stream_update(struct hdac_bus *bus, struct hdac_stream *s) __conditional_locking
 {
 	struct azx *chip = bus_to_azx(bus);
 	struct azx_dev *azx_dev = stream_to_azx_dev(s);
