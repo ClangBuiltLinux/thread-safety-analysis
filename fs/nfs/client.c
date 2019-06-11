@@ -1174,7 +1174,7 @@ static int nfs_server_list_show(struct seq_file *m, void *v)
  * set up the iterator to start reading from the volume list and return the first item
  */
 static void *nfs_volume_list_start(struct seq_file *m, loff_t *_pos)
-				__acquires(&nn->nfs_client_lock)
+				__acquires(&nn->nfs_client_lock) __no_thread_safety_analysis
 {
 	struct nfs_net *nn = net_generic(seq_file_net(m), nfs_net_id);
 
@@ -1197,7 +1197,7 @@ static void *nfs_volume_list_next(struct seq_file *p, void *v, loff_t *pos)
  * clean up after reading from the transports list
  */
 static void nfs_volume_list_stop(struct seq_file *p, void *v)
-				__releases(&nn->nfs_client_lock)
+				__releases(&nn->nfs_client_lock) __no_thread_safety_analysis
 {
 	struct nfs_net *nn = net_generic(seq_file_net(p), nfs_net_id);
 
