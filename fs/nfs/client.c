@@ -254,7 +254,7 @@ EXPORT_SYMBOL_GPL(nfs_free_client);
 /*
  * Release a reference to a shared client record
  */
-void nfs_put_client(struct nfs_client *clp)
+void nfs_put_client(struct nfs_client *clp) __conditional_unlocking
 {
 	struct nfs_net *nn;
 
