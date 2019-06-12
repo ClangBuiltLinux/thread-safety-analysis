@@ -203,12 +203,12 @@ static inline int ipc_checkid(struct kern_ipc_perm *ipcp, int id)
 	return ipcid_to_seqx(id) != ipcp->seq;
 }
 
-static inline void ipc_lock_object(struct kern_ipc_perm *perm)
+static inline void ipc_lock_object(struct kern_ipc_perm *perm) __acquires_spinlock(perm->lock)
 {
 	spin_lock(&perm->lock);
 }
 
-static inline void ipc_unlock_object(struct kern_ipc_perm *perm)
+static inline void ipc_unlock_object(struct kern_ipc_perm *perm) __releases_spinlock(perm->lock)
 {
 	spin_unlock(&perm->lock);
 }
