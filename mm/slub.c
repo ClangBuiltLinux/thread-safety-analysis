@@ -2184,7 +2184,7 @@ redo:
  * to guarantee no concurrent accesses).
  */
 static void unfreeze_partials(struct kmem_cache *s,
-		struct kmem_cache_cpu *c)
+		struct kmem_cache_cpu *c) __conditional_locking
 {
 #ifdef CONFIG_SLUB_CPU_PARTIAL
 	struct kmem_cache_node *n = NULL, *n2 = NULL;
