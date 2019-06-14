@@ -1722,7 +1722,7 @@ struct page *alloc_huge_page_vma(struct hstate *h, struct vm_area_struct *vma,
  * Increase the hugetlb pool such that it can accommodate a reservation
  * of size 'delta'.
  */
-static int gather_surplus_pages(struct hstate *h, int delta)
+static int gather_surplus_pages(struct hstate *h, int delta) __requires_spinlock(hugetlb_lock)
 {
 	struct list_head surplus_list;
 	struct page *page, *tmp;
@@ -3289,7 +3289,7 @@ static int is_hugetlb_entry_hwpoisoned(pte_t pte)
 }
 
 int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
-			    struct vm_area_struct *vma)
+			    struct vm_area_struct *vma) __no_thread_safety_analysis
 {
 	pte_t *src_pte, *dst_pte, entry, dst_entry;
 	struct page *ptepage;
@@ -3390,7 +3390,7 @@ int copy_hugetlb_page_range(struct mm_struct *dst, struct mm_struct *src,
 
 void __unmap_hugepage_range(struct mmu_gather *tlb, struct vm_area_struct *vma,
 			    unsigned long start, unsigned long end,
-			    struct page *ref_page)
+			    struct page *ref_page) __no_thread_safety_analysis
 {
 	struct mm_struct *mm = vma->vm_mm;
 	unsigned long address;
@@ -3598,7 +3598,7 @@ static void unmap_ref_private(struct mm_struct *mm, struct vm_area_struct *vma,
  */
 static vm_fault_t hugetlb_cow(struct mm_struct *mm, struct vm_area_struct *vma,
 		       unsigned long address, pte_t *ptep,
-		       struct page *pagecache_page, spinlock_t *ptl)
+		       struct page *pagecache_page, spinlock_t *ptl) __requires_spinlock(*ptl)
 {
 	pte_t pte;
 	struct hstate *h = hstate_vma(vma);
@@ -3779,7 +3779,7 @@ int huge_add_to_page_cache(struct page *page, struct address_space *mapping,
 static vm_fault_t hugetlb_no_page(struct mm_struct *mm,
 			struct vm_area_struct *vma,
 			struct address_space *mapping, pgoff_t idx,
-			unsigned long address, pte_t *ptep, unsigned int flags)
+			unsigned long address, pte_t *ptep, unsigned int flags) __no_thread_safety_analysis
 {
 	struct hstate *h = hstate_vma(vma);
 	vm_fault_t ret = VM_FAULT_SIGBUS;
@@ -3970,7 +3970,7 @@ u32 hugetlb_fault_mutex_hash(struct hstate *h, struct address_space *mapping,
 #endif
 
 vm_fault_t hugetlb_fault(struct mm_struct *mm, struct vm_area_struct *vma,
-			unsigned long address, unsigned int flags)
+			unsigned long address, unsigned int flags) __no_thread_safety_analysis
 {
 	pte_t *ptep, entry;
 	spinlock_t *ptl;
@@ -4240,7 +4240,7 @@ out_release_nounlock:
 long follow_hugetlb_page(struct mm_struct *mm, struct vm_area_struct *vma,
 			 struct page **pages, struct vm_area_struct **vmas,
 			 unsigned long *position, unsigned long *nr_pages,
-			 long i, unsigned int flags, int *nonblocking)
+			 long i, unsigned int flags, int *nonblocking) __no_thread_safety_analysis
 {
 	unsigned long pfn_offset;
 	unsigned long vaddr = *position;
@@ -4404,7 +4404,7 @@ same_page:
 #endif
 
 unsigned long hugetlb_change_protection(struct vm_area_struct *vma,
-		unsigned long address, unsigned long end, pgprot_t newprot)
+		unsigned long address, unsigned long end, pgprot_t newprot) __no_thread_safety_analysis
 {
 	struct mm_struct *mm = vma->vm_mm;
 	unsigned long start = address;
@@ -4729,7 +4729,7 @@ void adjust_range_if_pmd_sharing_possible(struct vm_area_struct *vma,
  * racing tasks could either miss the sharing (see huge_pte_offset) or select a
  * bad pmd for sharing.
  */
-pte_t *huge_pmd_share(struct mm_struct *mm, unsigned long addr, pud_t *pud)
+pte_t *huge_pmd_share(struct mm_struct *mm, unsigned long addr, pud_t *pud) __no_thread_safety_analysis
 {
 	struct vm_area_struct *vma = find_vma(mm, addr);
 	struct address_space *mapping = vma->vm_file->f_mapping;
