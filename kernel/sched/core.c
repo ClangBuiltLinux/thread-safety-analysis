@@ -4968,7 +4968,7 @@ EXPORT_SYMBOL(_cond_resched);
  * operations here to prevent schedule() from being called twice (once via
  * spin_unlock(), once by hand).
  */
-int __cond_resched_lock(spinlock_t *lock)
+int __cond_resched_lock(spinlock_t *lock) __conditional_locking
 {
 	int resched = should_resched(PREEMPT_LOCK_OFFSET);
 	int ret = 0;
