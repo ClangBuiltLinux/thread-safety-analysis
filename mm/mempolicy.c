@@ -532,7 +532,7 @@ static int queue_pages_pte_range(pmd_t *pmd, unsigned long addr,
 
 static int queue_pages_hugetlb(pte_t *pte, unsigned long hmask,
 			       unsigned long addr, unsigned long end,
-			       struct mm_walk *walk)
+			       struct mm_walk *walk) __no_thread_safety_analysis
 {
 #ifdef CONFIG_HUGETLB_PAGE
 	struct queue_pages *qp = walk->private;
