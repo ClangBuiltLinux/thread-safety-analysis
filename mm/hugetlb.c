@@ -73,7 +73,7 @@ struct mutex *hugetlb_fault_mutex_table ____cacheline_aligned_in_smp;
 /* Forward declaration */
 static int hugetlb_acct_memory(struct hstate *h, long delta);
 
-static inline void unlock_or_release_subpool(struct hugepage_subpool *spool)
+static inline void unlock_or_release_subpool(struct hugepage_subpool *spool) __releases_spinlock(spool->lock)
 {
 	bool free = (spool->count == 0) && (spool->used_hpages == 0);
 
