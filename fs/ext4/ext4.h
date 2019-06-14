@@ -2976,7 +2976,7 @@ static inline int ext4_fs_is_busy(struct ext4_sb_info *sbi)
 	return (atomic_read(&sbi->s_lock_busy) > EXT4_CONTENTION_THRESHOLD);
 }
 
-static inline void ext4_lock_group(struct super_block *sb, ext4_group_t group)
+static inline void ext4_lock_group(struct super_block *sb, ext4_group_t group) __no_thread_safety_analysis
 {
 	spinlock_t *lock = ext4_group_lock_ptr(sb, group);
 	if (spin_trylock(lock))
@@ -2997,7 +2997,7 @@ static inline void ext4_lock_group(struct super_block *sb, ext4_group_t group)
 }
 
 static inline void ext4_unlock_group(struct super_block *sb,
-					ext4_group_t group)
+					ext4_group_t group) __no_thread_safety_analysis
 {
 	spin_unlock(ext4_group_lock_ptr(sb, group));
 }
