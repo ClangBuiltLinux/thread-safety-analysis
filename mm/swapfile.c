@@ -311,7 +311,7 @@ static inline void cluster_clear_huge(struct swap_cluster_info *info)
 }
 
 static inline struct swap_cluster_info *lock_cluster(struct swap_info_struct *si,
-						     unsigned long offset)
+						     unsigned long offset) __conditional_locking
 {
 	struct swap_cluster_info *ci;
 
@@ -323,7 +323,7 @@ static inline struct swap_cluster_info *lock_cluster(struct swap_info_struct *si
 	return ci;
 }
 
-static inline void unlock_cluster(struct swap_cluster_info *ci)
+static inline void unlock_cluster(struct swap_cluster_info *ci) __conditional_unlocking
 {
 	if (ci)
 		spin_unlock(&ci->lock);
@@ -334,7 +334,7 @@ static inline void unlock_cluster(struct swap_cluster_info *ci)
  * swap_cluster_info if SSD-style cluster-based locking is in place.
  */
 static inline struct swap_cluster_info *lock_cluster_or_swap_info(
-		struct swap_info_struct *si, unsigned long offset)
+		struct swap_info_struct *si, unsigned long offset) __conditional_locking
 {
 	struct swap_cluster_info *ci;
 
@@ -348,7 +348,7 @@ static inline struct swap_cluster_info *lock_cluster_or_swap_info(
 }
 
 static inline void unlock_cluster_or_swap_info(struct swap_info_struct *si,
-					       struct swap_cluster_info *ci)
+					       struct swap_cluster_info *ci) __conditional_unlocking
 {
 	if (ci)
 		unlock_cluster(ci);
@@ -441,7 +441,7 @@ static void __free_cluster(struct swap_info_struct *si, unsigned long idx)
  * Doing discard actually. After a cluster discard is finished, the cluster
  * will be added to free cluster list. caller should hold si->lock.
 */
-static void swap_do_scheduled_discard(struct swap_info_struct *si)
+static void swap_do_scheduled_discard(struct swap_info_struct *si) __requires_spinlock(si->lock)
 {
 	struct swap_cluster_info *info, *ci;
 	unsigned int idx;
@@ -706,7 +706,7 @@ static void swap_range_free(struct swap_info_struct *si, unsigned long offset,
 
 static int scan_swap_map_slots(struct swap_info_struct *si,
 			       unsigned char usage, int nr,
-			       swp_entry_t slots[])
+			       swp_entry_t slots[]) __no_thread_safety_analysis
 {
 	struct swap_cluster_info *ci;
 	unsigned long offset;
@@ -1124,7 +1124,7 @@ out:
 	return NULL;
 }
 
-static struct swap_info_struct *swap_info_get(swp_entry_t entry)
+static struct swap_info_struct *swap_info_get(swp_entry_t entry) __conditional_locking
 {
 	struct swap_info_struct *p;
 
@@ -1135,7 +1135,7 @@ static struct swap_info_struct *swap_info_get(swp_entry_t entry)
 }
 
 static struct swap_info_struct *swap_info_get_cont(swp_entry_t entry,
-					struct swap_info_struct *q)
+					struct swap_info_struct *q) __conditional_unlocking
 {
 	struct swap_info_struct *p;
 
@@ -1306,7 +1306,7 @@ static int swp_entry_cmp(const void *ent1, const void *ent2)
 	return (int)swp_type(*e1) - (int)swp_type(*e2);
 }
 
-void swapcache_free_entries(swp_entry_t *entries, int n)
+void swapcache_free_entries(swp_entry_t *entries, int n) __conditional_unlocking
 {
 	struct swap_info_struct *p, *prev;
 	int i;
@@ -1554,7 +1554,7 @@ static int page_trans_huge_map_swapcount(struct page *page, int *total_mapcount,
  * reuse_swap_page() returns false, but it may be always overwritten
  * (see the other implementation for CONFIG_SWAP=n).
  */
-bool reuse_swap_page(struct page *page, int *total_map_swapcount)
+bool reuse_swap_page(struct page *page, int *total_map_swapcount) __no_thread_safety_analysis
 {
 	int count, total_mapcount, total_swapcount;
 
@@ -3408,7 +3408,7 @@ EXPORT_SYMBOL_GPL(__page_file_index);
  * page table locks; if it fails, add_swap_count_continuation(, GFP_KERNEL)
  * can be called after dropping locks.
  */
-int add_swap_count_continuation(swp_entry_t entry, gfp_t gfp_mask)
+int add_swap_count_continuation(swp_entry_t entry, gfp_t gfp_mask) __no_thread_safety_analysis
 {
 	struct swap_info_struct *si;
 	struct swap_cluster_info *ci;
