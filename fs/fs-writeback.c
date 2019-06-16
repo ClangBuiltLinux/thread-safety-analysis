@@ -1255,7 +1255,7 @@ void inode_wait_for_writeback(struct inode *inode)
  * so once i_lock is dropped, inode can go away.
  */
 static void inode_sleep_on_writeback(struct inode *inode)
-	__releases(inode->i_lock)
+	__releases(inode->i_lock) __releases_spinlock(inode->i_lock)
 {
 	DEFINE_WAIT(wait);
 	wait_queue_head_t *wqh = bit_waitqueue(&inode->i_state, __I_SYNC);
