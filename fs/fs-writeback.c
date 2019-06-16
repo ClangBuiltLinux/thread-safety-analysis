@@ -928,7 +928,7 @@ static void bdi_up_write_wb_switch_rwsem(struct backing_dev_info *bdi) { }
 
 static struct bdi_writeback *
 locked_inode_to_wb_and_lock_list(struct inode *inode)
-	__releases(&inode->i_lock)
+	__releases(&inode->i_lock) __releases_spinlock(inode->i_lock)
 	__acquires(&wb->list_lock)
 {
 	struct bdi_writeback *wb = inode_to_wb(inode);
