@@ -1428,7 +1428,7 @@ __writeback_single_inode(struct inode *inode, struct writeback_control *wbc)
  * and does more profound writeback list handling in writeback_sb_inodes().
  */
 static int writeback_single_inode(struct inode *inode,
-				  struct writeback_control *wbc)
+				  struct writeback_control *wbc) __no_thread_safety_analysis
 {
 	struct bdi_writeback *wb;
 	int ret = 0;
