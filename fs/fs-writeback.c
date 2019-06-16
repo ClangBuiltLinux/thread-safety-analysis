@@ -1021,7 +1021,7 @@ void wb_start_background_writeback(struct bdi_writeback *wb)
 /*
  * Remove the inode from the writeback list it is on.
  */
-void inode_io_list_del(struct inode *inode)
+void inode_io_list_del(struct inode *inode) __no_thread_safety_analysis
 {
 	struct bdi_writeback *wb;
 
