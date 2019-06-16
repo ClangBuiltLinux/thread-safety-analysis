@@ -71,7 +71,7 @@ again:
 }
 
 static int walk_pud_range(p4d_t *p4d, unsigned long addr, unsigned long end,
-			  struct mm_walk *walk)
+			  struct mm_walk *walk) __no_thread_safety_analysis
 {
 	pud_t *pud;
 	unsigned long next;
