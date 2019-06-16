@@ -194,7 +194,7 @@ static void move_ptes(struct vm_area_struct *vma, pmd_t *old_pmd,
 #ifdef CONFIG_HAVE_MOVE_PMD
 static bool move_normal_pmd(struct vm_area_struct *vma, unsigned long old_addr,
 		  unsigned long new_addr, unsigned long old_end,
-		  pmd_t *old_pmd, pmd_t *new_pmd)
+		  pmd_t *old_pmd, pmd_t *new_pmd) __no_thread_safety_analysis
 {
 	spinlock_t *old_ptl, *new_ptl;
 	struct mm_struct *mm = vma->vm_mm;
