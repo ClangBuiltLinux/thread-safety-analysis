@@ -1083,7 +1083,7 @@ static bool bd_may_claim(struct block_device *bdev, struct block_device *whole,
  * 0 if @bdev can be claimed, -EBUSY otherwise.
  */
 static int bd_prepare_to_claim(struct block_device *bdev,
-			       struct block_device *whole, void *holder)
+			       struct block_device *whole, void *holder) __requires_spinlock(bdev_lock)
 {
 retry:
 	/* if someone else claimed, fail */
