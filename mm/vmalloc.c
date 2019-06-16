@@ -3351,7 +3351,7 @@ void pcpu_free_vm_areas(struct vm_struct **vms, int nr_vms)
 
 #ifdef CONFIG_PROC_FS
 static void *s_start(struct seq_file *m, loff_t *pos)
-	__acquires(&vmap_area_lock)
+	__acquires(&vmap_area_lock) __acquires_spinlock(vmap_area_lock)
 {
 	spin_lock(&vmap_area_lock);
 	return seq_list_start(&vmap_area_list, *pos);
@@ -3363,7 +3363,7 @@ static void *s_next(struct seq_file *m, void *p, loff_t *pos)
 }
 
 static void s_stop(struct seq_file *m, void *p)
-	__releases(&vmap_area_lock)
+	__releases(&vmap_area_lock) __releases_spinlock(vmap_area_lock)
 {
 	spin_unlock(&vmap_area_lock);
 }
