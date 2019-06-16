@@ -115,7 +115,7 @@ static pte_t move_soft_dirty_pte(pte_t pte)
 static void move_ptes(struct vm_area_struct *vma, pmd_t *old_pmd,
 		unsigned long old_addr, unsigned long old_end,
 		struct vm_area_struct *new_vma, pmd_t *new_pmd,
-		unsigned long new_addr, bool need_rmap_locks)
+		unsigned long new_addr, bool need_rmap_locks) __no_thread_safety_analysis
 {
 	struct mm_struct *mm = vma->vm_mm;
 	pte_t *old_pte, *new_pte, pte;
