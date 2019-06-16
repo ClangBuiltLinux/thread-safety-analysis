@@ -1224,7 +1224,7 @@ static int write_inode(struct inode *inode, struct writeback_control *wbc)
  * Caller must make sure inode cannot go away when we drop i_lock.
  */
 static void __inode_wait_for_writeback(struct inode *inode)
-	__releases(inode->i_lock)
+	__releases(inode->i_lock) __requires_spinlock(inode->i_lock)
 	__acquires(inode->i_lock)
 {
 	DEFINE_WAIT_BIT(wq, &inode->i_state, __I_SYNC);
