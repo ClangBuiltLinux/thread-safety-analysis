@@ -939,7 +939,7 @@ locked_inode_to_wb_and_lock_list(struct inode *inode)
 }
 
 static struct bdi_writeback *inode_to_wb_and_lock_list(struct inode *inode)
-	__acquires(&wb->list_lock)
+	__acquires(&wb->list_lock) __no_thread_safety_analysis
 {
 	struct bdi_writeback *wb = inode_to_wb(inode);
 
