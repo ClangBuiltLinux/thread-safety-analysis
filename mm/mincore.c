@@ -112,7 +112,7 @@ static int mincore_unmapped_range(unsigned long addr, unsigned long end,
 }
 
 static int mincore_pte_range(pmd_t *pmd, unsigned long addr, unsigned long end,
-			struct mm_walk *walk)
+			struct mm_walk *walk) __no_thread_safety_analysis
 {
 	spinlock_t *ptl;
 	struct vm_area_struct *vma = walk->vma;
