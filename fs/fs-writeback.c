@@ -2095,7 +2095,7 @@ int dirtytime_interval_handler(struct ctl_table *table, int write,
 	return ret;
 }
 
-static noinline void block_dump___mark_inode_dirty(struct inode *inode)
+static noinline void block_dump___mark_inode_dirty(struct inode *inode) __conditional_locking
 {
 	if (inode->i_ino || strcmp(inode->i_sb->s_id, "bdev")) {
 		struct dentry *dentry;
