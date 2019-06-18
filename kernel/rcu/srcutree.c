@@ -513,7 +513,7 @@ static void srcu_schedule_cbs_snp(struct srcu_struct *ssp, struct srcu_node *snp
  * are initiating callback invocation.  This allows the ->srcu_have_cbs[]
  * array to have a finite number of elements.
  */
-static void srcu_gp_end(struct srcu_struct *ssp)
+static void srcu_gp_end(struct srcu_struct *ssp) __releases_mutex(&ssp->srcu_gp_mutex)
 {
 	unsigned long cbdelay;
 	bool cbs;
