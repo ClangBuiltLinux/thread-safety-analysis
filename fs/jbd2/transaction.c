@@ -738,7 +738,7 @@ EXPORT_SYMBOL(jbd2_journal_restart);
  *
  * The journal lock should not be held on entry.
  */
-void jbd2_journal_lock_updates(journal_t *journal)
+void jbd2_journal_lock_updates(journal_t *journal) __acquires_mutex(&journal->j_barrier)
 {
 	DEFINE_WAIT(wait);
 
@@ -795,7 +795,7 @@ void jbd2_journal_lock_updates(journal_t *journal)
  *
  * Should be called without the journal lock held.
  */
-void jbd2_journal_unlock_updates (journal_t *journal)
+void jbd2_journal_unlock_updates(journal_t *journal) __releases_mutex(&journal->j_barrier)
 {
 	J_ASSERT(journal->j_barrier_count != 0);
 
