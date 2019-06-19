@@ -433,7 +433,7 @@ retry_locked:
 static struct page *follow_pud_mask(struct vm_area_struct *vma,
 				    unsigned long address, p4d_t *p4dp,
 				    unsigned int flags,
-				    struct follow_page_context *ctx)
+				    struct follow_page_context *ctx) __no_thread_safety_analysis
 {
 	pud_t *pud;
 	spinlock_t *ptl;
