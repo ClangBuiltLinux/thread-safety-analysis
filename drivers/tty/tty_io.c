@@ -902,7 +902,7 @@ static inline ssize_t do_tty_write(
 	struct tty_struct *tty,
 	struct file *file,
 	const char __user *buf,
-	size_t count)
+	size_t count) __no_thread_safety_analysis
 {
 	ssize_t ret, written = 0;
 	unsigned int chunk;
@@ -1074,7 +1074,7 @@ ssize_t redirected_tty_write(struct file *file, const char __user *buf,
  *	Locking: none for xchar method, write ordering for write method.
  */
 
-int tty_send_xchar(struct tty_struct *tty, char ch)
+int tty_send_xchar(struct tty_struct *tty, char ch) __no_thread_safety_analysis
 {
 	int	was_stopped = tty->stopped;
 
@@ -2371,7 +2371,7 @@ static int tiocgetd(struct tty_struct *tty, int __user *p)
  *
  */
 
-static int send_break(struct tty_struct *tty, unsigned int duration)
+static int send_break(struct tty_struct *tty, unsigned int duration) __no_thread_safety_analysis
 {
 	int retval;
 
