@@ -348,10 +348,10 @@ static __always_inline int spin_trylock(spinlock_t *lock)
 	return raw_spin_trylock(&lock->rlock);
 }
 
-#define spin_lock_nested(lock, subclass)			\
-do {								\
-	raw_spin_lock_nested(spinlock_check(lock), subclass);	\
-} while (0)
+static void __maybe_unused spin_lock_nested(spinlock_t *lock, int subclass) __acquires_spinlock(*lock) __no_thread_safety_analysis
+{
+	raw_spin_lock_nested(spinlock_check(lock), subclass);
+}
 
 #define spin_lock_nest_lock(lock, nest_lock)				\
 do {									\
