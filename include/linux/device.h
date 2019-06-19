@@ -1212,7 +1212,7 @@ static inline int device_lock_interruptible(struct device *dev)
 	return mutex_lock_interruptible(&dev->mutex);
 }
 
-static inline int device_trylock(struct device *dev)
+static inline int device_trylock(struct device *dev) __try_acquires_mutex(1, &dev->mutex)
 {
 	return mutex_trylock(&dev->mutex);
 }
