@@ -383,7 +383,7 @@ print0:
 }
 #endif /* CONFIG_KALLSYMS */
 
-static int lock_trace(struct task_struct *task)
+static int lock_trace(struct task_struct *task) __try_acquires_mutex(0, task->signal->cred_guard_mutex)
 {
 	int err = mutex_lock_killable(&task->signal->cred_guard_mutex);
 	if (err)
@@ -395,7 +395,7 @@ static int lock_trace(struct task_struct *task)
 	return 0;
 }
 
-static void unlock_trace(struct task_struct *task)
+static void unlock_trace(struct task_struct *task) __releases_mutex(task->signal->cred_guard_mutex)
 {
 	mutex_unlock(&task->signal->cred_guard_mutex);
 }
