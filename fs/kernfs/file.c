@@ -183,7 +183,7 @@ static const struct seq_operations kernfs_seq_ops = {
  */
 static ssize_t kernfs_file_direct_read(struct kernfs_open_file *of,
 				       char __user *user_buf, size_t count,
-				       loff_t *ppos)
+				       loff_t *ppos) __uses_conditionally(of->prealloc_mutex)
 {
 	ssize_t len = min_t(size_t, count, PAGE_SIZE);
 	const struct kernfs_ops *ops;
@@ -271,7 +271,7 @@ static ssize_t kernfs_fop_read(struct file *file, char __user *user_buf,
  * back.
  */
 static ssize_t kernfs_fop_write(struct file *file, const char __user *user_buf,
-				size_t count, loff_t *ppos)
+				size_t count, loff_t *ppos) __uses_conditionally(of->prealloc_mutex)
 {
 	struct kernfs_open_file *of = kernfs_of(file);
 	const struct kernfs_ops *ops;
