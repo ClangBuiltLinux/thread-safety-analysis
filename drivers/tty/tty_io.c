@@ -908,7 +908,7 @@ static inline ssize_t do_tty_write(
 	unsigned int chunk;
 
 	ret = tty_write_lock(tty, file->f_flags & O_NDELAY);
-	if (ret < 0)
+	if (!ret)
 		return ret;
 
 	/*
@@ -1085,7 +1085,7 @@ int tty_send_xchar(struct tty_struct *tty, char ch)
 		return 0;
 	}
 
-	if (tty_write_lock(tty, 0) < 0)
+	if (!tty_write_lock(tty, 0))
 		return -ERESTARTSYS;
 
 	down_read(&tty->termios_rwsem);
@@ -2382,7 +2382,7 @@ static int send_break(struct tty_struct *tty, unsigned int duration)
 		retval = tty->ops->break_ctl(tty, duration);
 	else {
 		/* Do the work ourselves */
-		if (tty_write_lock(tty, 0) < 0)
+		if (!tty_write_lock(tty, 0))
 			return -EINTR;
 		retval = tty->ops->break_ctl(tty, -1);
 		if (retval)
