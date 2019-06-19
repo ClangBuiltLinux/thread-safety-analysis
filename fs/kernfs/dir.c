@@ -455,7 +455,7 @@ void kernfs_put_active(struct kernfs_node *kn)
  * return after draining is complete.
  */
 static void kernfs_drain(struct kernfs_node *kn)
-	__releases(&kernfs_mutex) __acquires(&kernfs_mutex) __requires(kernfs_mutex)
+	__releases(&kernfs_mutex) __acquires(&kernfs_mutex) __requires_mutex(kernfs_mutex)
 {
 	struct kernfs_root *root = kernfs_root(kn);
 
@@ -1274,7 +1274,7 @@ void kernfs_activate(struct kernfs_node *kn)
 	mutex_unlock(&kernfs_mutex);
 }
 
-static void __kernfs_remove(struct kernfs_node *kn)
+static void __kernfs_remove(struct kernfs_node *kn) __requires_mutex(kernfs_mutex)
 {
 	struct kernfs_node *pos;
 
