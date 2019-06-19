@@ -322,7 +322,7 @@ no_page:
 static struct page *follow_pmd_mask(struct vm_area_struct *vma,
 				    unsigned long address, pud_t *pudp,
 				    unsigned int flags,
-				    struct follow_page_context *ctx)
+				    struct follow_page_context *ctx) __no_thread_safety_analysis
 {
 	pmd_t *pmd, pmdval;
 	spinlock_t *ptl;
