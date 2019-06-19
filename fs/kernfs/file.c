@@ -100,7 +100,7 @@ static void kernfs_seq_stop_active(struct seq_file *sf, void *v)
 	kernfs_put_active(of->kn);
 }
 
-static void *kernfs_seq_start(struct seq_file *sf, loff_t *ppos)
+static void *kernfs_seq_start(struct seq_file *sf, loff_t *ppos) __no_thread_safety_analysis
 {
 	struct kernfs_open_file *of = sf->private;
 	const struct kernfs_ops *ops;
@@ -150,7 +150,7 @@ static void *kernfs_seq_next(struct seq_file *sf, void *v, loff_t *ppos)
 	}
 }
 
-static void kernfs_seq_stop(struct seq_file *sf, void *v)
+static void kernfs_seq_stop(struct seq_file *sf, void *v) __no_thread_safety_analysis
 {
 	struct kernfs_open_file *of = sf->private;
 
