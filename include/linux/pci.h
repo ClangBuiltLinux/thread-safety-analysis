@@ -59,7 +59,7 @@ struct pci_slot {
 	struct hotplug_slot	*hotplug;	/* Hotplug info (move here) */
 	unsigned char		number;		/* PCI_SLOT(pci_dev->devfn) */
 	struct kobject		kobj;
-};
+} __capability("mutex");
 
 static inline const char *pci_slot_name(const struct pci_slot *slot)
 {
@@ -592,7 +592,7 @@ struct pci_bus {
 	struct bin_attribute	*legacy_io;	/* Legacy I/O for this bus */
 	struct bin_attribute	*legacy_mem;	/* Legacy mem */
 	unsigned int		is_added:1;
-};
+} __capability("mutex");
 
 #define to_pci_bus(n)	container_of(n, struct pci_bus, dev)
 
