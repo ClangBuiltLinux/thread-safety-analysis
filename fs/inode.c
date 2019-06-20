@@ -833,7 +833,7 @@ repeat:
  * iget_locked for details.
  */
 static struct inode *find_inode_fast(struct super_block *sb,
-				struct hlist_head *head, unsigned long ino)
+				struct hlist_head *head, unsigned long ino) __no_thread_safety_analysis
 {
 	struct inode *inode = NULL;
 
