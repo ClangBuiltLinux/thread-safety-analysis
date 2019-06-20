@@ -802,7 +802,7 @@ static void __wait_on_freeing_inode(struct inode *inode);
 static struct inode *find_inode(struct super_block *sb,
 				struct hlist_head *head,
 				int (*test)(struct inode *, void *),
-				void *data)
+				void *data) __no_thread_safety_analysis
 {
 	struct inode *inode = NULL;
 
