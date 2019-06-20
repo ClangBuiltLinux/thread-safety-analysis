@@ -202,7 +202,7 @@ __flush_batch(journal_t *journal, int *batch_count)
  * The journal should be locked before calling this function.
  * Called with j_checkpoint_mutex held.
  */
-int jbd2_log_do_checkpoint(journal_t *journal)
+int jbd2_log_do_checkpoint(journal_t *journal) __requires_mutex(journal->j_checkpoint_mutex)
 {
 	struct journal_head	*jh;
 	struct buffer_head	*bh;
