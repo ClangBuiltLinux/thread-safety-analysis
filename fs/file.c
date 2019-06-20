@@ -842,7 +842,7 @@ bool get_close_on_exec(unsigned int fd)
 
 static int do_dup2(struct files_struct *files,
 	struct file *file, unsigned fd, unsigned flags)
-__releases(&files->file_lock)
+__releases(&files->file_lock) __releases_spinlock(files->file_lock)
 {
 	struct file *tofree;
 	struct fdtable *fdt;
