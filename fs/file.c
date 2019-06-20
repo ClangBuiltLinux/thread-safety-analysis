@@ -191,7 +191,7 @@ static int expand_fdtable(struct files_struct *files, unsigned int nr)
  * The files->file_lock should be held on entry, and will be held on exit.
  */
 static int expand_files(struct files_struct *files, unsigned int nr)
-	__releases(files->file_lock)
+	__releases(files->file_lock) __requires_spinlock(files->file_lock)
 	__acquires(files->file_lock)
 {
 	struct fdtable *fdt;
