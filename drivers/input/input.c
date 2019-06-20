@@ -1075,7 +1075,7 @@ union input_seq_state {
 	void *p;
 };
 
-static void *input_devices_seq_start(struct seq_file *seq, loff_t *pos)
+static void *input_devices_seq_start(struct seq_file *seq, loff_t *pos) __acquires_mutex(input_mutex) __no_thread_safety_analysis
 {
 	union input_seq_state *state = (union input_seq_state *)&seq->private;
 	int error;
@@ -1099,7 +1099,7 @@ static void *input_devices_seq_next(struct seq_file *seq, void *v, loff_t *pos)
 	return seq_list_next(v, &input_dev_list, pos);
 }
 
-static void input_seq_stop(struct seq_file *seq, void *v)
+static void input_seq_stop(struct seq_file *seq, void *v) __releases_mutex(input_mutex) __no_thread_safety_analysis
 {
 	union input_seq_state *state = (union input_seq_state *)&seq->private;
 
