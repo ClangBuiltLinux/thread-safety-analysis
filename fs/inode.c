@@ -1444,7 +1444,7 @@ out:
 }
 EXPORT_SYMBOL(find_inode_nowait);
 
-int insert_inode_locked(struct inode *inode)
+int insert_inode_locked(struct inode *inode) __no_thread_safety_analysis
 {
 	struct super_block *sb = inode->i_sb;
 	ino_t ino = inode->i_ino;
