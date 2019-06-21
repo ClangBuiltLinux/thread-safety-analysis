@@ -1199,7 +1199,7 @@ static const struct file_operations input_devices_fileops = {
 	.release	= seq_release,
 };
 
-static void *input_handlers_seq_start(struct seq_file *seq, loff_t *pos)
+static void *input_handlers_seq_start(struct seq_file *seq, loff_t *pos) __acquires_mutex(input_mutex) __no_thread_safety_analysis
 {
 	union input_seq_state *state = (union input_seq_state *)&seq->private;
 	int error;
