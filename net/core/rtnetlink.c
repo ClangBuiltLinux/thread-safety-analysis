@@ -447,7 +447,7 @@ EXPORT_SYMBOL_GPL(__rtnl_link_unregister);
 /* Return with the rtnl_lock held when there are no network
  * devices unregistering in any network namespace.
  */
-static void rtnl_lock_unregistering_all(void)
+static void rtnl_lock_unregistering_all(void) __acquires_mutex(rtnl_mutex)
 {
 	struct net *net;
 	bool unregistering;
