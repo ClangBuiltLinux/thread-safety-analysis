@@ -548,7 +548,7 @@ static inline void dentry_unlist(struct dentry *dentry, struct dentry *parent)
 	}
 }
 
-static void __dentry_kill(struct dentry *dentry)
+static void __dentry_kill(struct dentry *dentry) __no_thread_safety_analysis
 {
 	struct dentry *parent = NULL;
 	bool can_free = true;
