@@ -612,7 +612,7 @@ out:
 }
 
 static int genl_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh,
-			struct netlink_ext_ack *extack)
+			struct netlink_ext_ack *extack) __uses_conditionally(genl_mutex)
 {
 	const struct genl_family *family;
 	int err;
