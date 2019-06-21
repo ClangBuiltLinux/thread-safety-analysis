@@ -102,7 +102,7 @@ int ps2_sendbyte(struct ps2dev *ps2dev, u8 byte, unsigned int timeout)
 }
 EXPORT_SYMBOL(ps2_sendbyte);
 
-void ps2_begin_command(struct ps2dev *ps2dev)
+void ps2_begin_command(struct ps2dev *ps2dev) __acquires_mutex(ps2dev->cmd_mutex) __no_thread_safety_analysis
 {
 	struct mutex *m = ps2dev->serio->ps2_cmd_mutex ?: &ps2dev->cmd_mutex;
 
@@ -110,7 +110,7 @@ void ps2_begin_command(struct ps2dev *ps2dev)
 }
 EXPORT_SYMBOL(ps2_begin_command);
 
-void ps2_end_command(struct ps2dev *ps2dev)
+void ps2_end_command(struct ps2dev *ps2dev) __releases_mutex(ps2dev->cmd_mutex) __no_thread_safety_analysis
 {
 	struct mutex *m = ps2dev->serio->ps2_cmd_mutex ?: &ps2dev->cmd_mutex;
 
