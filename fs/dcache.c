@@ -838,7 +838,7 @@ static inline bool fast_dput(struct dentry *dentry) __conditional_unlocking
  * releasing its resources. If the parent dentries were scheduled for release
  * they too may now get deleted.
  */
-void dput(struct dentry *dentry)
+void dput(struct dentry *dentry) __conditional_unlocking
 {
 	while (dentry) {
 		might_sleep();
