@@ -2968,7 +2968,7 @@ static int rtnl_group_changelink(const struct sk_buff *skb,
 }
 
 static int __rtnl_newlink(struct sk_buff *skb, struct nlmsghdr *nlh,
-			  struct nlattr **attr, struct netlink_ext_ack *extack)
+			  struct nlattr **attr, struct netlink_ext_ack *extack) __requires_mutex(rtnl_mutex)
 {
 	struct nlattr *slave_attr[RTNL_SLAVE_MAX_TYPE + 1];
 	unsigned char name_assign_type = NET_NAME_USER;
@@ -3222,7 +3222,7 @@ out_unregister:
 }
 
 static int rtnl_newlink(struct sk_buff *skb, struct nlmsghdr *nlh,
-			struct netlink_ext_ack *extack)
+			struct netlink_ext_ack *extack) __requires_mutex(rtnl_mutex)
 {
 	struct nlattr **attr;
 	int ret;
