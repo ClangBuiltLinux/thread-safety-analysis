@@ -2999,7 +2999,7 @@ SYSCALL_DEFINE2(io_uring_setup, u32, entries,
 static int __io_uring_register(struct io_ring_ctx *ctx, unsigned opcode,
 			       void __user *arg, unsigned nr_args)
 	__releases(ctx->uring_lock)
-	__acquires(ctx->uring_lock)
+	__acquires(ctx->uring_lock) __requires_mutex(ctx->uring_lock)
 {
 	int ret;
 
