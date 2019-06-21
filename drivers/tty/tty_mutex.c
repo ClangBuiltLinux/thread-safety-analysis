@@ -11,7 +11,7 @@
  * Getting the big tty mutex.
  */
 
-void tty_lock(struct tty_struct *tty)
+void tty_lock(struct tty_struct *tty) __acquires_mutex(tty->legacy_mutex) __no_thread_safety_analysis
 {
 	if (WARN(tty->magic != TTY_MAGIC, "L Bad %p\n", tty))
 		return;
@@ -33,7 +33,7 @@ int tty_lock_interruptible(struct tty_struct *tty)
 	return ret;
 }
 
-void tty_unlock(struct tty_struct *tty)
+void tty_unlock(struct tty_struct *tty) __releases_mutex(tty->legacy_mutex) __no_thread_safety_analysis
 {
 	if (WARN(tty->magic != TTY_MAGIC, "U Bad %p\n", tty))
 		return;
