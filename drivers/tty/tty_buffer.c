@@ -53,16 +53,16 @@
  *	flip buffer
  */
 
-void tty_buffer_lock_exclusive(struct tty_port *port) __acquires_mutex(port->buf.lock)
+void tty_buffer_lock_exclusive(struct tty_port *port) __acquires_mutex(port->buf.lock) __no_thread_safety_analysis
 {
 	struct tty_bufhead *buf = &port->buf;
 
 	atomic_inc(&buf->priority);
-	mutex_lock(&port->buf.lock);
+	mutex_lock(&buf->lock);
 }
 EXPORT_SYMBOL_GPL(tty_buffer_lock_exclusive);
 
-void tty_buffer_unlock_exclusive(struct tty_port *port) __releases_mutex(port->buf.lock)
+void tty_buffer_unlock_exclusive(struct tty_port *port) __releases_mutex(port->buf.lock) __no_thread_safety_analysis
 {
 	struct tty_bufhead *buf = &port->buf;
 	int restart;
@@ -70,7 +70,7 @@ void tty_buffer_unlock_exclusive(struct tty_port *port) __releases_mutex(port->b
 	restart = buf->head->commit != buf->head->read;
 
 	atomic_dec(&buf->priority);
-	mutex_unlock(&port->buf.lock);
+	mutex_unlock(&buf->lock);
 	if (restart)
 		queue_work(system_unbound_wq, &buf->work);
 }
