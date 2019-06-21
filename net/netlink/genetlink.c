@@ -847,7 +847,7 @@ static const struct nla_policy ctrl_policy[CTRL_ATTR_MAX+1] = {
 				    .len = GENL_NAMSIZ - 1 },
 };
 
-static int ctrl_getfamily(struct sk_buff *skb, struct genl_info *info)
+static int ctrl_getfamily(struct sk_buff *skb, struct genl_info *info) __requires_mutex(genl_mutex)
 {
 	struct sk_buff *msg;
 	const struct genl_family *res = NULL;
