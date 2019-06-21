@@ -663,7 +663,7 @@ static inline bool retain_dentry(struct dentry *dentry)
  * Returns dentry requiring refcount drop, or NULL if we're done.
  */
 static struct dentry *dentry_kill(struct dentry *dentry)
-	__releases(dentry->d_lock)
+	__releases(dentry->d_lock) __no_thread_safety_analysis
 {
 	struct inode *inode = dentry->d_inode;
 	struct dentry *parent = NULL;
