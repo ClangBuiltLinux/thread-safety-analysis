@@ -1438,7 +1438,7 @@ static int io_poll_add(struct io_kiocb *req, const struct io_uring_sqe *sqe)
 }
 
 static int __io_submit_sqe(struct io_ring_ctx *ctx, struct io_kiocb *req,
-			   const struct sqe_submit *s, bool force_nonblock)
+			   const struct sqe_submit *s, bool force_nonblock) __uses_conditionally(ctx->uring_lock)
 {
 	int ret, opcode;
 
