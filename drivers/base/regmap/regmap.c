@@ -494,13 +494,13 @@ static void regmap_lock_unlock_none(void *__map)
 
 }
 
-static void regmap_lock_mutex(void *__map)
+static void regmap_lock_mutex(void *__map) __no_thread_safety_analysis
 {
 	struct regmap *map = __map;
 	mutex_lock(&map->mutex);
 }
 
-static void regmap_unlock_mutex(void *__map)
+static void regmap_unlock_mutex(void *__map) __no_thread_safety_analysis
 {
 	struct regmap *map = __map;
 	mutex_unlock(&map->mutex);
