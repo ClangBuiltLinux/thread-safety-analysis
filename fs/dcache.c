@@ -716,7 +716,7 @@ got_locks:
  * The caller needs to hold the RCU read lock, so that the dentry is
  * guaranteed to stay around even if the refcount goes down to zero!
  */
-static inline bool fast_dput(struct dentry *dentry)
+static inline bool fast_dput(struct dentry *dentry) __conditional_unlocking
 {
 	int ret;
 	unsigned int d_flags;
