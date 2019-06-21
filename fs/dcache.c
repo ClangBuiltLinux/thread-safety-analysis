@@ -595,7 +595,7 @@ static void __dentry_kill(struct dentry *dentry) __no_thread_safety_analysis
 	cond_resched();
 }
 
-static struct dentry *__lock_parent(struct dentry *dentry)
+static struct dentry *__lock_parent(struct dentry *dentry) __no_thread_safety_analysis
 {
 	struct dentry *parent;
 	rcu_read_lock();
