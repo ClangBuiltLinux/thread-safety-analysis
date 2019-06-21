@@ -110,7 +110,7 @@ void __rtnl_unlock(void) __releases_mutex(rtnl_mutex)
 	}
 }
 
-void rtnl_unlock(void) __releases_mutex(rtnl_mutex)
+void rtnl_unlock(void) __releases_mutex(rtnl_mutex) __no_thread_safety_analysis
 {
 	/* This fellow will unlock it for us. */
 	netdev_run_todo();
