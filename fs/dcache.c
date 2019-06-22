@@ -2737,7 +2737,7 @@ static void copy_name(struct dentry *dentry, struct dentry *target)
  * and the sb->s_vfs_rename_mutex if they differ. See lock_rename().
  */
 static void __d_move(struct dentry *dentry, struct dentry *target,
-		     bool exchange)
+		     bool exchange) __no_thread_safety_analysis
 {
 	struct dentry *old_parent, *p;
 	struct inode *dir = NULL;
