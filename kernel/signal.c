@@ -615,7 +615,7 @@ static int __dequeue_signal(struct sigpending *pending, sigset_t *mask,
  *
  * All callers have to hold the siglock.
  */
-int dequeue_signal(struct task_struct *tsk, sigset_t *mask, kernel_siginfo_t *info)
+int dequeue_signal(struct task_struct *tsk, sigset_t *mask, kernel_siginfo_t *info) __requires_spinlock(tsk->sighand->siglock)
 {
 	bool resched_timer = false;
 	int signr;
