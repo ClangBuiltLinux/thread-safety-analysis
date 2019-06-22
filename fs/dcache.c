@@ -2932,7 +2932,7 @@ out_err:
  * will only occur during atomic_open. So we need to check for the dentry
  * being already hashed only in the final case.
  */
-struct dentry *d_splice_alias(struct inode *inode, struct dentry *dentry)
+struct dentry *d_splice_alias(struct inode *inode, struct dentry *dentry) __conditional_unlocking
 {
 	if (IS_ERR(inode))
 		return ERR_CAST(inode);
