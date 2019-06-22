@@ -1027,7 +1027,7 @@ EXPORT_SYMBOL(d_prune_aliases);
  * the caller to kick it off-list.  Otherwise, return true and have
  * that dentry's inode and parent both locked.
  */
-static bool shrink_lock_dentry(struct dentry *dentry)
+static bool shrink_lock_dentry(struct dentry *dentry) __no_thread_safety_analysis
 {
 	struct inode *inode;
 	struct dentry *parent;
