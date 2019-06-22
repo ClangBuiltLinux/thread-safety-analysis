@@ -1068,7 +1068,7 @@ out:
 	return false;
 }
 
-static void shrink_dentry_list(struct list_head *list)
+static void shrink_dentry_list(struct list_head *list) __no_thread_safety_analysis
 {
 	while (!list_empty(list)) {
 		struct dentry *dentry, *parent;
