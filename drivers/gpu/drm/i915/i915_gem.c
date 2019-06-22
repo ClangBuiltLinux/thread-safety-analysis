@@ -125,7 +125,7 @@ i915_gem_wait_for_error(struct i915_gpu_error *error)
 	}
 }
 
-int i915_mutex_lock_interruptible(struct drm_device *dev)
+int i915_mutex_lock_interruptible(struct drm_device *dev) __try_acquires_mutex(0, dev->struct_mutex)
 {
 	struct drm_i915_private *dev_priv = to_i915(dev);
 	int ret;
