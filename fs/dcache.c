@@ -2432,7 +2432,7 @@ static inline void end_dir_add(struct inode *dir, unsigned n)
 	smp_store_release(&dir->i_dir_seq, n + 2);
 }
 
-static void d_wait_lookup(struct dentry *dentry)
+static void d_wait_lookup(struct dentry *dentry) __requires_spinlock(dentry->d_lock)
 {
 	if (d_in_lookup(dentry)) {
 		DECLARE_WAITQUEUE(wait, current);
