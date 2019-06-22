@@ -2573,7 +2573,7 @@ EXPORT_SYMBOL(__d_lookup_done);
 
 /* inode->i_lock held if inode is non-NULL */
 
-static inline void __d_add(struct dentry *dentry, struct inode *inode)
+static inline void __d_add(struct dentry *dentry, struct inode *inode) __conditional_unlocking
 {
 	struct inode *dir = NULL;
 	unsigned n;
