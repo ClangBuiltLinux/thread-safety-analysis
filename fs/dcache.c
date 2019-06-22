@@ -1249,7 +1249,7 @@ enum d_walk_ret {
  * The @enter() callbacks are called with d_lock held.
  */
 static void d_walk(struct dentry *parent, void *data,
-		   enum d_walk_ret (*enter)(void *, struct dentry *))
+		   enum d_walk_ret (*enter)(void *, struct dentry *)) __no_thread_safety_analysis
 {
 	struct dentry *this_parent;
 	struct list_head *next;
