@@ -2829,7 +2829,7 @@ EXPORT_SYMBOL_GPL(dm_internal_resume);
  * which prevents interaction with userspace-driven suspend.
  */
 
-void dm_internal_suspend_fast(struct mapped_device *md)
+void dm_internal_suspend_fast(struct mapped_device *md) __acquires_mutex(md->suspend_lock)
 {
 	mutex_lock(&md->suspend_lock);
 	if (dm_suspended_md(md) || dm_suspended_internally_md(md))
@@ -2842,7 +2842,7 @@ void dm_internal_suspend_fast(struct mapped_device *md)
 }
 EXPORT_SYMBOL_GPL(dm_internal_suspend_fast);
 
-void dm_internal_resume_fast(struct mapped_device *md)
+void dm_internal_resume_fast(struct mapped_device *md) __releases_mutex(md->suspend_lock)
 {
 	if (dm_suspended_md(md) || dm_suspended_internally_md(md))
 		goto done;
