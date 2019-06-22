@@ -2608,7 +2608,7 @@ static inline void __d_add(struct dentry *dentry, struct inode *inode) __conditi
  * The entry was actually filled in earlier during d_alloc().
  */
 
-void d_add(struct dentry *entry, struct inode *inode)
+void d_add(struct dentry *entry, struct inode *inode) __acquires_spinlock(inode->i_lock)
 {
 	if (inode) {
 		security_d_instantiate(entry, inode);
