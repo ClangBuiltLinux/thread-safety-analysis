@@ -1392,7 +1392,7 @@ static int wq_select_unbound_cpu(int cpu)
 }
 
 static void __queue_work(int cpu, struct workqueue_struct *wq,
-			 struct work_struct *work)
+			 struct work_struct *work) __no_thread_safety_analysis
 {
 	struct pool_workqueue *pwq;
 	struct worker_pool *last_pool;
