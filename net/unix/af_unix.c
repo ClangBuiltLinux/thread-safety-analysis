@@ -2033,7 +2033,7 @@ static void unix_copy_addr(struct msghdr *msg, struct sock *sk)
 }
 
 static int unix_dgram_recvmsg(struct socket *sock, struct msghdr *msg,
-			      size_t size, int flags)
+			      size_t size, int flags) __no_thread_safety_analysis
 {
 	struct scm_cookie scm;
 	struct sock *sk = sock->sk;
