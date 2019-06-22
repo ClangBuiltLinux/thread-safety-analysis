@@ -2370,7 +2370,7 @@ EXPORT_SYMBOL(d_hash_and_lookup);
  * remove it from the hash queues so it can be deleted later
  */
  
-void d_delete(struct dentry * dentry)
+void d_delete(struct dentry * dentry) __no_thread_safety_analysis
 {
 	struct inode *inode = dentry->d_inode;
 	int isdir = d_is_dir(dentry);
