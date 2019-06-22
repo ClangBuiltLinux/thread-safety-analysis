@@ -922,7 +922,7 @@ t_next(struct seq_file *m, void *v, loff_t *pos)
 	return NULL;
 }
 
-static void *t_start(struct seq_file *m, loff_t *pos)
+static void *t_start(struct seq_file *m, loff_t *pos) __acquires_mutex(event_mutex)
 {
 	struct trace_event_file *file;
 	struct trace_array *tr = m->private;
@@ -955,7 +955,7 @@ s_next(struct seq_file *m, void *v, loff_t *pos)
 	return NULL;
 }
 
-static void *s_start(struct seq_file *m, loff_t *pos)
+static void *s_start(struct seq_file *m, loff_t *pos) __acquires_mutex(event_mutex)
 {
 	struct trace_event_file *file;
 	struct trace_array *tr = m->private;
@@ -984,7 +984,7 @@ static int t_show(struct seq_file *m, void *v)
 	return 0;
 }
 
-static void t_stop(struct seq_file *m, void *p)
+static void t_stop(struct seq_file *m, void *p) __releases_mutex(event_mutex)
 {
 	mutex_unlock(&event_mutex);
 }
@@ -999,7 +999,7 @@ p_next(struct seq_file *m, void *v, loff_t *pos)
 }
 
 static void *p_start(struct seq_file *m, loff_t *pos)
-	__acquires(RCU)
+	__acquires(RCU) __acquires_mutex(event_mutex)
 {
 	struct trace_pid_list *pid_list;
 	struct trace_array *tr = m->private;
@@ -1022,7 +1022,7 @@ static void *p_start(struct seq_file *m, loff_t *pos)
 }
 
 static void p_stop(struct seq_file *m, void *p)
-	__releases(RCU)
+	__releases(RCU) __releases_mutex(event_mutex)
 {
 	rcu_read_unlock_sched();
 	mutex_unlock(&event_mutex);
@@ -1268,7 +1268,7 @@ static int f_show(struct seq_file *m, void *v)
 	return 0;
 }
 
-static void *f_start(struct seq_file *m, loff_t *pos)
+static void *f_start(struct seq_file *m, loff_t *pos) __acquires_mutex(event_mutex)
 {
 	void *p = (void *)FORMAT_HEADER;
 	loff_t l = 0;
@@ -1284,7 +1284,7 @@ static void *f_start(struct seq_file *m, loff_t *pos)
 	return p;
 }
 
-static void f_stop(struct seq_file *m, void *p)
+static void f_stop(struct seq_file *m, void *p) __releases_mutex(event_mutex)
 {
 	mutex_unlock(&event_mutex);
 }
