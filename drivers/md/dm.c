@@ -2207,12 +2207,12 @@ int dm_create(int minor, struct mapped_device **result)
  * Functions to manage md->type.
  * All are required to hold md->type_lock.
  */
-void dm_lock_md_type(struct mapped_device *md)
+void dm_lock_md_type(struct mapped_device *md) __acquires_mutex(md->type_lock)
 {
 	mutex_lock(&md->type_lock);
 }
 
-void dm_unlock_md_type(struct mapped_device *md)
+void dm_unlock_md_type(struct mapped_device *md) __releases_mutex(md->type_lock)
 {
 	mutex_unlock(&md->type_lock);
 }
