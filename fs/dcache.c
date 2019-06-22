@@ -993,7 +993,7 @@ EXPORT_SYMBOL(d_find_alias);
  *	Try to kill dentries associated with this inode.
  * WARNING: you must own a reference to inode.
  */
-void d_prune_aliases(struct inode *inode)
+void d_prune_aliases(struct inode *inode) __no_thread_safety_analysis
 {
 	struct dentry *dentry;
 restart:
