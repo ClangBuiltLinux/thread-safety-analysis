@@ -121,7 +121,7 @@ cont:
  * Calculate and dget next entry in top down tree traversal.
  */
 static struct dentry *get_next_positive_dentry(struct dentry *prev,
-					       struct dentry *root)
+					       struct dentry *root) __no_thread_safety_analysis
 {
 	struct autofs_sb_info *sbi = autofs_sbi(root->d_sb);
 	struct list_head *next;
