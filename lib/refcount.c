@@ -342,7 +342,7 @@ EXPORT_SYMBOL(refcount_dec_and_mutex_lock);
  * Return: true and hold spinlock if able to decrement refcount to 0, false
  *         otherwise
  */
-bool refcount_dec_and_lock(refcount_t *r, spinlock_t *lock) __try_acquires_spinlock(true, *lock) __conditional_unlocking
+bool refcount_dec_and_lock(refcount_t *r, spinlock_t *lock) __conditional_unlocking
 {
 	if (refcount_dec_not_one(r))
 		return false;

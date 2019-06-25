@@ -451,7 +451,7 @@ static __always_inline int spin_is_contended(spinlock_t *lock)
  * Decrements @atomic by 1.  If the result is 0, returns true and locks
  * @lock.  Returns false for all other cases.
  */
-extern int _atomic_dec_and_lock(atomic_t *atomic, spinlock_t *lock);
+extern int _atomic_dec_and_lock(atomic_t *atomic, spinlock_t *lock) __try_acquires_spinlock(1, *lock);
 #define atomic_dec_and_lock(atomic, lock) \
 		__cond_lock(lock, _atomic_dec_and_lock(atomic, lock))
 
