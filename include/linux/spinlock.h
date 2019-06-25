@@ -343,7 +343,7 @@ static __always_inline void spin_lock_bh(spinlock_t *lock)
 	raw_spin_lock_bh(&lock->rlock);
 }
 
-static __always_inline int spin_trylock(spinlock_t *lock)
+static __always_inline int spin_trylock(spinlock_t *lock) __try_acquires_spinlock(1, *lock)
 {
 	return raw_spin_trylock(&lock->rlock);
 }
