@@ -83,7 +83,7 @@ static inline int kref_put_mutex(struct kref *kref,
 
 static inline int kref_put_lock(struct kref *kref,
 				void (*release)(struct kref *kref),
-				spinlock_t *lock)
+				spinlock_t *lock) __no_thread_safety_analysis
 {
 	if (refcount_dec_and_lock(&kref->refcount, lock)) {
 		release(kref);
