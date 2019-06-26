@@ -1984,7 +1984,7 @@ static inline void double_lock(spinlock_t *l1, spinlock_t *l2) __acquires_spinlo
 	spin_lock_nested(l2, SINGLE_DEPTH_NESTING);
 }
 
-static inline void double_lock_irq(spinlock_t *l1, spinlock_t *l2)
+static inline void double_lock_irq(spinlock_t *l1, spinlock_t *l2) __acquires_spinlock(*l1) __acquires_spinlock(*l2)
 {
 	if (l1 > l2)
 		swap(l1, l2);
