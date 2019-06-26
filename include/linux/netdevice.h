@@ -3912,7 +3912,7 @@ static inline void __netif_tx_lock_bh(struct netdev_queue *txq)
 	txq->xmit_lock_owner = smp_processor_id();
 }
 
-static inline bool __netif_tx_trylock(struct netdev_queue *txq)
+static inline bool __netif_tx_trylock(struct netdev_queue *txq) __try_acquires_spinlock(1, txq->_xmit_lock)
 {
 	bool ok = spin_trylock(&txq->_xmit_lock);
 	if (likely(ok))
