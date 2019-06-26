@@ -9436,7 +9436,7 @@ void update_max_interval(void)
  *
  * Balancing parameters are set up in init_sched_domains.
  */
-static void rebalance_domains(struct rq *rq, enum cpu_idle_type idle)
+static void rebalance_domains(struct rq *rq, enum cpu_idle_type idle) __conditional_locking
 {
 	int continue_balancing = 1;
 	int cpu = rq->cpu;
