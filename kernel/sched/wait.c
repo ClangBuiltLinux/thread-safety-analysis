@@ -302,7 +302,7 @@ EXPORT_SYMBOL(prepare_to_wait_event);
  * condition in the caller before they add the wait
  * entry to the wake queue.
  */
-int do_wait_intr(wait_queue_head_t *wq, wait_queue_entry_t *wait)
+int do_wait_intr(wait_queue_head_t *wq, wait_queue_entry_t *wait) __requires_spinlock(wq->lock)
 {
 	if (likely(list_empty(&wait->entry)))
 		__add_wait_queue_entry_tail(wq, wait);
