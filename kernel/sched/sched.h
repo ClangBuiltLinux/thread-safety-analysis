@@ -1975,7 +1975,7 @@ static inline void double_unlock_balance(struct rq *this_rq, struct rq *busiest)
 	lock_set_subclass(&this_rq->lock.dep_map, 0, _RET_IP_);
 }
 
-static inline void double_lock(spinlock_t *l1, spinlock_t *l2)
+static inline void double_lock(spinlock_t *l1, spinlock_t *l2) __acquires_spinlock(*l1) __acquires_spinlock(*l2)  
 {
 	if (l1 > l2)
 		swap(l1, l2);
