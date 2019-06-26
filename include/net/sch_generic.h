@@ -155,7 +155,7 @@ static inline bool qdisc_is_empty(const struct Qdisc *qdisc)
 	return !qdisc->q.qlen;
 }
 
-static inline bool qdisc_run_begin(struct Qdisc *qdisc)
+static inline bool qdisc_run_begin(struct Qdisc *qdisc) __conditional_locking
 {
 	if (qdisc->flags & TCQ_F_NOLOCK) {
 		if (!spin_trylock(&qdisc->seqlock))
@@ -172,7 +172,7 @@ static inline bool qdisc_run_begin(struct Qdisc *qdisc)
 	return true;
 }
 
-static inline void qdisc_run_end(struct Qdisc *qdisc) __no_thread_safety_analysis
+static inline void qdisc_run_end(struct Qdisc *qdisc) __conditional_unlocking
 {
 	write_seqcount_end(&qdisc->running);
 	if (qdisc->flags & TCQ_F_NOLOCK)
