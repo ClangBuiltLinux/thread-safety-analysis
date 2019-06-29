@@ -221,7 +221,7 @@ void snd_seq_cell_free(struct snd_seq_event_cell * cell)
 static int snd_seq_cell_alloc(struct snd_seq_pool *pool,
 			      struct snd_seq_event_cell **cellp,
 			      int nonblock, struct file *file,
-			      struct mutex *mutexp)
+			      struct mutex *mutexp) __requires_conditionally(mutexp)
 {
 	struct snd_seq_event_cell *cell;
 	unsigned long flags;
