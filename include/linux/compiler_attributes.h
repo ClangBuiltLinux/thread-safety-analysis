@@ -279,7 +279,7 @@
 # define __uses_conditionally(x)        __attribute__((no_thread_safety_analysis))
 # define __acquires_conditionally(x)    __attribute__((no_thread_safety_analysis))
 # define __releases_conditionally(x)    __attribute__((no_thread_safety_analysis))
-# define __requires_conditionally(x)    __attribute__((no_thread_safety_analysis))
+# define __requires_conditionally(x)    __attribute__((requires_capability(x))) __attribute__((no_thread_safety_analysis))
 # define __uses_retry_acquires(x)       __attribute__((no_thread_safety_analysis))
 # define __no_thread_safety_analysis    __attribute__((no_thread_safety_analysis))
 #else
