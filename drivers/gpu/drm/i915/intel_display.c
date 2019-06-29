@@ -3839,7 +3839,7 @@ static bool gpu_reset_clobbers_display(struct drm_i915_private *dev_priv)
 		intel_has_gpu_reset(dev_priv));
 }
 
-void intel_prepare_reset(struct drm_i915_private *dev_priv)
+void intel_prepare_reset(struct drm_i915_private *dev_priv) __acquires_mutex(dev_priv->drm.mode_config.mutex) __no_thread_safety_analysis
 {
 	struct drm_device *dev = &dev_priv->drm;
 	struct drm_modeset_acquire_ctx *ctx = &dev_priv->reset_ctx;
@@ -3895,7 +3895,7 @@ void intel_prepare_reset(struct drm_i915_private *dev_priv)
 	state->acquire_ctx = ctx;
 }
 
-void intel_finish_reset(struct drm_i915_private *dev_priv)
+void intel_finish_reset(struct drm_i915_private *dev_priv) __releases_mutex(dev_priv->drm.mode_config.mutex) __no_thread_safety_analysis
 {
 	struct drm_device *dev = &dev_priv->drm;
 	struct drm_modeset_acquire_ctx *ctx = &dev_priv->reset_ctx;
