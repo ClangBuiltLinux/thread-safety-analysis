@@ -559,7 +559,7 @@ static DEFINE_MUTEX(swflag_mutex);
  *  Acquire the HW semaphore to access the PHY or NVM.
  *
  **/
-static s32 e1000_get_hw_semaphore_82574(struct e1000_hw *hw)
+static s32 e1000_get_hw_semaphore_82574(struct e1000_hw *hw) __try_acquires_mutex(0, swflag_mutex)
 {
 	s32 ret_val;
 
@@ -577,7 +577,7 @@ static s32 e1000_get_hw_semaphore_82574(struct e1000_hw *hw)
  *  Release hardware semaphore used to access the PHY or NVM
  *
  **/
-static void e1000_put_hw_semaphore_82574(struct e1000_hw *hw)
+static void e1000_put_hw_semaphore_82574(struct e1000_hw *hw) __releases_mutex(swflag_mutex)
 {
 	e1000_put_hw_semaphore_82573(hw);
 	mutex_unlock(&swflag_mutex);
