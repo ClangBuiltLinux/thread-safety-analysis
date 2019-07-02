@@ -4047,7 +4047,7 @@ static inline void netif_addr_lock(struct net_device *dev) __acquires_spinlock(&
 	spin_lock(&dev->addr_list_lock);
 }
 
-static inline void netif_addr_lock_nested(struct net_device *dev)
+static inline void netif_addr_lock_nested(struct net_device *dev) __acquires_spinlock(dev->addr_list_lock)
 {
 	int subclass = SINGLE_DEPTH_NESTING;
 
