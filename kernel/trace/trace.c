@@ -5887,7 +5887,7 @@ tracing_poll_pipe(struct file *filp, poll_table *poll_table)
 }
 
 /* Must be called with iter->mutex held. */
-static int tracing_wait_pipe(struct file *filp)
+static int tracing_wait_pipe(struct file *filp) __no_thread_safety_analysis
 {
 	struct trace_iterator *iter = filp->private_data;
 	int ret;
