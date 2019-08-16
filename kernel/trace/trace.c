@@ -3416,7 +3416,7 @@ void tracing_iter_reset(struct trace_iterator *iter, int cpu)
  * The current tracer is copied to avoid a global locking
  * all around.
  */
-static void *s_start(struct seq_file *m, loff_t *pos)
+static void *s_start(struct seq_file *m, loff_t *pos) __acquires_mutex(cpu_access_lock)
 {
 	struct trace_iterator *iter = m->private;
 	struct trace_array *tr = iter->tr;
@@ -3477,7 +3477,7 @@ static void *s_start(struct seq_file *m, loff_t *pos)
 	return p;
 }
 
-static void s_stop(struct seq_file *m, void *p)
+static void s_stop(struct seq_file *m, void *p) __releases_mutex(cpu_access_lock)
 {
 	struct trace_iterator *iter = m->private;
 
