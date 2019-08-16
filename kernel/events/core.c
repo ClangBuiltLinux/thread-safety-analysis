@@ -9365,7 +9365,7 @@ fail_clear_files:
 	return ret;
 }
 
-static int perf_event_set_filter(struct perf_event *event, void __user *arg)
+static int perf_event_set_filter(struct perf_event *event, void __user *arg) __no_thread_safety_analysis
 {
 	int ret = -EINVAL;
 	char *filter_str;
