@@ -754,7 +754,7 @@ static void uprobe_buffer_disable(void)
 	}
 }
 
-static struct uprobe_cpu_buffer *uprobe_buffer_get(void)
+static struct uprobe_cpu_buffer *uprobe_buffer_get(void) __no_thread_safety_analysis
 {
 	struct uprobe_cpu_buffer *ucb;
 	int cpu;
@@ -771,7 +771,7 @@ static struct uprobe_cpu_buffer *uprobe_buffer_get(void)
 	return ucb;
 }
 
-static void uprobe_buffer_put(struct uprobe_cpu_buffer *ucb)
+static void uprobe_buffer_put(struct uprobe_cpu_buffer *ucb) __no_thread_safety_analysis
 {
 	mutex_unlock(&ucb->mutex);
 }
