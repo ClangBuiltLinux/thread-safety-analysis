@@ -170,7 +170,7 @@ exit_free_rbtree:
 }
 
 
-static void *stat_seq_start(struct seq_file *s, loff_t *pos)
+static void *stat_seq_start(struct seq_file *s, loff_t *pos) __no_thread_safety_analysis
 {
 	struct stat_session *session = s->private;
 	struct rb_node *node;
@@ -207,7 +207,7 @@ static void *stat_seq_next(struct seq_file *s, void *p, loff_t *pos)
 	return rb_next(node);
 }
 
-static void stat_seq_stop(struct seq_file *s, void *p)
+static void stat_seq_stop(struct seq_file *s, void *p) __no_thread_safety_analysis
 {
 	struct stat_session *session = s->private;
 	mutex_unlock(&session->stat_mutex);
