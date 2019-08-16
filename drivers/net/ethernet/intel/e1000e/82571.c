@@ -938,7 +938,7 @@ static s32 e1000_set_d0_lplu_state_82571(struct e1000_hw *hw, bool active)
  *
  *  This resets the hardware into a known state.
  **/
-static s32 e1000_reset_hw_82571(struct e1000_hw *hw)
+static s32 e1000_reset_hw_82571(struct e1000_hw *hw) __uses_conditionally(swflag_mutex)
 {
 	u32 ctrl, ctrl_ext, eecd, tctl;
 	s32 ret_val;
