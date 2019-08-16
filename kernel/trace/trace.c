@@ -655,7 +655,7 @@ DEFINE_MUTEX(trace_types_lock);
 static DECLARE_RWSEM(all_cpu_access_lock);
 static DEFINE_PER_CPU(struct mutex, cpu_access_lock);
 
-static inline void trace_access_lock(int cpu)
+static inline void trace_access_lock(int cpu) __acquires_mutex(cpu_access_lock) __no_thread_safety_analysis
 {
 	if (cpu == RING_BUFFER_ALL_CPUS) {
 		/* gain it for accessing the whole ring buffer. */
@@ -671,7 +671,7 @@ static inline void trace_access_lock(int cpu)
 	}
 }
 
-static inline void trace_access_unlock(int cpu)
+static inline void trace_access_unlock(int cpu) __releases_mutex(cpu_access_lock) __no_thread_safety_analysis
 {
 	if (cpu == RING_BUFFER_ALL_CPUS) {
 		up_write(&all_cpu_access_lock);
