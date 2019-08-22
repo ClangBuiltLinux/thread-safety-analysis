@@ -272,9 +272,9 @@
 # define __releases_pci_bus(x)          __attribute__((release_capability(x)))
 # define __try_acquires_pci_bus(r, x)   __attribute__((try_acquire_capability(r, x)))
 
-# define __acquires_pci_slot(x)          __attribute__((acquire_capability(x)))
-# define __releases_pci_slot(x)          __attribute__((release_capability(x)))
-# define __try_acquires_pci_slot(r, x)   __attribute__((try_acquire_capability(r, x)))
+# define __acquires_pci_slot(x)         __attribute__((acquire_capability(x)))
+# define __releases_pci_slot(x)         __attribute__((release_capability(x)))
+# define __try_acquires_pci_slot(r, x)  __attribute__((try_acquire_capability(r, x)))
 
 # define __uses_conditionally(x)        __attribute__((no_thread_safety_analysis))
 # define __acquires_conditionally(x)    __attribute__((no_thread_safety_analysis))
