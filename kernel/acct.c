@@ -141,7 +141,7 @@ static inline struct bsd_acct_struct *to_acct(struct fs_pin *p)
 	return p ? container_of(p, struct bsd_acct_struct, pin) : NULL;
 }
 
-static struct bsd_acct_struct *acct_get(struct pid_namespace *ns)
+static struct bsd_acct_struct *acct_get(struct pid_namespace *ns) __no_thread_safety_analysis
 {
 	struct bsd_acct_struct *res;
 again:
