@@ -264,7 +264,7 @@ static void do_io_probe(struct pcmcia_socket *s, unsigned int base,
  * readable() - iomem validation function for cards with a valid CIS
  */
 static int readable(struct pcmcia_socket *s, struct resource *res,
-		    unsigned int *count)
+		    unsigned int *count) __requires_mutex(s->ops_mutex)
 {
 	int ret = -EINVAL;
 
