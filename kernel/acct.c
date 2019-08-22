@@ -571,7 +571,7 @@ void acct_collect(long exitcode, int group_dead)
 	spin_unlock_irq(&current->sighand->siglock);
 }
 
-static void slow_acct_process(struct pid_namespace *ns)
+static void slow_acct_process(struct pid_namespace *ns) __no_thread_safety_analysis
 {
 	for ( ; ns; ns = ns->parent) {
 		struct bsd_acct_struct *acct = acct_get(ns);
