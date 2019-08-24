@@ -927,7 +927,7 @@ static int usblp_wtest(struct usblp *usblp, int nonblock)
  *
  * We do not use wait_event_interruptible because it makes locking iffy.
  */
-static int usblp_rwait_and_lock(struct usblp *usblp, int nonblock)
+static int usblp_rwait_and_lock(struct usblp *usblp, int nonblock) __try_acquires_mutex(0, &usblp->mut)
 {
 	DECLARE_WAITQUEUE(waita, current);
 	int rc;
