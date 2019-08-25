@@ -4160,7 +4160,7 @@ static inline void ext4_mb_show_ac(struct ext4_allocation_context *ac)
  *
  * One can tune this size via /sys/fs/ext4/<partition>/mb_stream_req
  */
-static void ext4_mb_group_or_file(struct ext4_allocation_context *ac)
+static void ext4_mb_group_or_file(struct ext4_allocation_context *ac) __no_thread_safety_analysis
 {
 	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
 	int bsbits = ac->ac_sb->s_blocksize_bits;
@@ -4397,7 +4397,7 @@ static void ext4_mb_add_n_trim(struct ext4_allocation_context *ac)
 /*
  * release all resource we used in allocation
  */
-static int ext4_mb_release_context(struct ext4_allocation_context *ac)
+static int ext4_mb_release_context(struct ext4_allocation_context *ac) __no_thread_safety_analysis
 {
 	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
 	struct ext4_prealloc_space *pa = ac->ac_pa;
