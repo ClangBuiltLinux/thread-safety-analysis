@@ -158,7 +158,7 @@ static int drm_legacy_lock_free(struct drm_lock_data *lock_data,
  * Add the current task to the lock wait queue, and attempt to take to lock.
  */
 int drm_legacy_lock(struct drm_device *dev, void *data,
-		    struct drm_file *file_priv)
+		    struct drm_file *file_priv) __requires_mutex(drm_global_mutex)
 {
 	DECLARE_WAITQUEUE(entry, current);
 	struct drm_lock *lock = data;
