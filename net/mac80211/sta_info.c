@@ -548,7 +548,7 @@ ieee80211_recalc_p2p_go_ps_allowed(struct ieee80211_sub_if_data *sdata)
  * this function replaces the mutex lock
  * with a RCU lock
  */
-static int sta_info_insert_finish(struct sta_info *sta) __acquires(RCU)
+static int sta_info_insert_finish(struct sta_info *sta) __acquires(RCU) __releases_mutex(sta->local.sta_mtx)
 {
 	struct ieee80211_local *local = sta->local;
 	struct ieee80211_sub_if_data *sdata = sta->sdata;
