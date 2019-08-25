@@ -92,7 +92,7 @@ static DEFINE_WW_CLASS(crtc_ww_class);
  * and care must be taken not to nest calls. New code should use the
  * drm_modeset_lock_all_ctx() function and pass in the context explicitly.
  */
-void drm_modeset_lock_all(struct drm_device *dev)
+void drm_modeset_lock_all(struct drm_device *dev) __acquires_mutex(dev->mode_config.mutex)
 {
 	struct drm_mode_config *config = &dev->mode_config;
 	struct drm_modeset_acquire_ctx *ctx;
@@ -146,7 +146,7 @@ EXPORT_SYMBOL(drm_modeset_lock_all);
  * be taken not to nest calls. New code should pass the acquisition context
  * directly to the drm_modeset_drop_locks() function.
  */
-void drm_modeset_unlock_all(struct drm_device *dev)
+void drm_modeset_unlock_all(struct drm_device *dev) __releases_mutex(dev->mode_config.mutex)
 {
 	struct drm_mode_config *config = &dev->mode_config;
 	struct drm_modeset_acquire_ctx *ctx = config->acquire_ctx;
