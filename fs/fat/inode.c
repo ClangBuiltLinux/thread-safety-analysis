@@ -569,13 +569,13 @@ int fat_fill_inode(struct inode *inode, struct msdos_dir_entry *de)
 	return 0;
 }
 
-static inline void fat_lock_build_inode(struct msdos_sb_info *sbi)
+static inline void fat_lock_build_inode(struct msdos_sb_info *sbi) __acquires_conditionally(sbi->nfs_build_inode_lock)
 {
 	if (sbi->options.nfs == FAT_NFS_NOSTALE_RO)
 		mutex_lock(&sbi->nfs_build_inode_lock);
 }
 
-static inline void fat_unlock_build_inode(struct msdos_sb_info *sbi)
+static inline void fat_unlock_build_inode(struct msdos_sb_info *sbi) __releases_conditionally(sbi->nfs_build_inode_lock)
 {
 	if (sbi->options.nfs == FAT_NFS_NOSTALE_RO)
 		mutex_unlock(&sbi->nfs_build_inode_lock);
