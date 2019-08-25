@@ -3002,7 +3002,7 @@ i915_gem_obj_finish_shmem_access(struct drm_i915_gem_object *obj)
 	i915_gem_object_unpin_pages(obj);
 }
 
-int __must_check i915_mutex_lock_interruptible(struct drm_device *dev);
+int __must_check i915_mutex_lock_interruptible(struct drm_device *dev) __try_acquires_mutex(0, dev->struct_mutex);
 int i915_gem_dumb_create(struct drm_file *file_priv,
 			 struct drm_device *dev,
 			 struct drm_mode_create_dumb *args);
