@@ -281,7 +281,7 @@ static int nlmsvc_unlink_block(struct nlm_block *block)
 	return status;
 }
 
-static void nlmsvc_free_block(struct kref *kref)
+static void nlmsvc_free_block(struct kref *kref) __no_thread_safety_analysis
 {
 	struct nlm_block *block = container_of(kref, struct nlm_block, b_count);
 	struct nlm_file		*file = block->b_file;
