@@ -21,12 +21,12 @@
 /* mutex to protect coming/going of the the jump_label table */
 static DEFINE_MUTEX(jump_label_mutex);
 
-void jump_label_lock(void)
+void jump_label_lock(void) __acquires_mutex(jump_label_mutex)
 {
 	mutex_lock(&jump_label_mutex);
 }
 
-void jump_label_unlock(void)
+void jump_label_unlock(void) __releases_mutex(jump_label_mutex)
 {
 	mutex_unlock(&jump_label_mutex);
 }
