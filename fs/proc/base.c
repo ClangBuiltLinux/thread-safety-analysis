@@ -2557,7 +2557,7 @@ static ssize_t proc_pid_attr_write(struct file * file, const char __user * buf,
 
 	/* Guard against adverse ptrace interaction */
 	rv = mutex_lock_interruptible(&current->signal->cred_guard_mutex);
-	if (rv < 0)
+	if (rv)
 		goto out_free;
 
 	rv = security_setprocattr(PROC_I(inode)->op.lsm,
