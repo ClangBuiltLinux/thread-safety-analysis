@@ -1091,7 +1091,7 @@ static long seccomp_notify_send(struct seccomp_filter *filter,
 		return -EINVAL;
 
 	ret = mutex_lock_interruptible(&filter->notify_lock);
-	if (!ret)
+	if (ret)
 		return ret;
 
 	list_for_each_entry(cur, &filter->notif->notifications, list) {
@@ -1133,7 +1133,7 @@ static long seccomp_notify_id_valid(struct seccomp_filter *filter,
 		return -EFAULT;
 
 	ret = mutex_lock_interruptible(&filter->notify_lock);
-	if (!ret)
+	if (ret)
 		return ret;
 
 	ret = -ENOENT;
@@ -1177,7 +1177,7 @@ static __poll_t seccomp_notify_poll(struct file *file,
 
 	poll_wait(file, &filter->notif->wqh, poll_tab);
 
-	if (!mutex_lock_interruptible(&filter->notify_lock))
+	if (mutex_lock_interruptible(&filter->notify_lock))
 		return EPOLLERR;
 
 	list_for_each_entry(cur, &filter->notif->notifications, list) {
