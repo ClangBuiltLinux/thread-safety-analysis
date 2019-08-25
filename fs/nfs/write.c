@@ -1028,7 +1028,7 @@ nfs_reqs_to_commit(struct nfs_commit_info *cinfo)
 /* NFS_I(cinfo->inode)->commit_mutex held by caller */
 int
 nfs_scan_commit_list(struct list_head *src, struct list_head *dst,
-		     struct nfs_commit_info *cinfo, int max)
+		     struct nfs_commit_info *cinfo, int max) __no_thread_safety_analysis
 {
 	struct nfs_page *req, *tmp;
 	int ret = 0;
