@@ -896,7 +896,7 @@ int intel_psr_wait_for_idle(const struct intel_crtc_state *new_crtc_state,
 					 out_value);
 }
 
-static bool __psr_wait_for_idle_locked(struct drm_i915_private *dev_priv)
+static bool __psr_wait_for_idle_locked(struct drm_i915_private *dev_priv) __requires_mutex(dev_priv->psr.lock)
 {
 	i915_reg_t reg;
 	u32 mask;
