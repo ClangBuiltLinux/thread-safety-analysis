@@ -80,7 +80,7 @@ static int autofs_write(struct autofs_sb_info *sbi,
 
 static void autofs_notify_daemon(struct autofs_sb_info *sbi,
 				 struct autofs_wait_queue *wq,
-				 int type)
+				 int type) __releases_mutex(sbi->wq_mutex)
 {
 	union {
 		struct autofs_packet_hdr hdr;
