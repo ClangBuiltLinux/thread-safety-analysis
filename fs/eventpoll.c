@@ -673,7 +673,7 @@ static inline void ep_pm_stay_awake_rcu(struct epitem *epi)
 static __poll_t ep_scan_ready_list(struct eventpoll *ep,
 			      __poll_t (*sproc)(struct eventpoll *,
 					   struct list_head *, void *),
-			      void *priv, int depth, bool ep_locked)
+			      void *priv, int depth, bool ep_locked) __uses_conditionally(ep->mtx)
 {
 	__poll_t res;
 	int pwake = 0;
