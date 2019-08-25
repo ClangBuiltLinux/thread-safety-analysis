@@ -1221,7 +1221,7 @@ void rpc_pipefs_exit_net(struct net *net)
  * found. This lock have to be released by rpc_put_sb_net() when all operations
  * will be completed.
  */
-struct super_block *rpc_get_sb_net(const struct net *net)
+struct super_block *rpc_get_sb_net(const struct net *net) __no_thread_safety_analysis
 {
 	struct sunrpc_net *sn = net_generic(net, sunrpc_net_id);
 
@@ -1233,7 +1233,7 @@ struct super_block *rpc_get_sb_net(const struct net *net)
 }
 EXPORT_SYMBOL_GPL(rpc_get_sb_net);
 
-void rpc_put_sb_net(const struct net *net)
+void rpc_put_sb_net(const struct net *net) __no_thread_safety_analysis
 {
 	struct sunrpc_net *sn = net_generic(net, sunrpc_net_id);
 
