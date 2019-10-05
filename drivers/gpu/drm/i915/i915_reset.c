@@ -906,7 +906,7 @@ bool i915_gem_unset_wedged(struct drm_i915_private *i915)
 	clear_bit(I915_WEDGED, &i915->gpu_error.flags);
 	ret = true;
 unlock:
-	mutex_unlock(&i915->gpu_error.wedge_mutex);
+	mutex_unlock(&error->wedge_mutex);
 
 	return ret;
 }
