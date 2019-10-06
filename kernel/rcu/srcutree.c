@@ -1091,7 +1091,7 @@ EXPORT_SYMBOL_GPL(srcu_batches_completed);
  * to SRCU_STATE_SCAN2, and invoke srcu_gp_end() when scan has
  * completed in that state.
  */
-static void srcu_advance_state(struct srcu_struct *ssp)
+static void srcu_advance_state(struct srcu_struct *ssp) __no_thread_safety_analysis
 {
 	int idx;
 
