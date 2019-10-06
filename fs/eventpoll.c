@@ -2106,7 +2106,7 @@ SYSCALL_DEFINE1(epoll_create, int, size)
  * file descriptors inside the interest set.
  */
 SYSCALL_DEFINE4(epoll_ctl, int, epfd, int, op, int, fd,
-		struct epoll_event __user *, event)
+		struct epoll_event __user *, event) __uses_conditionally(epmutex) __uses_conditionally(tep->mtx)
 {
 	int error;
 	int full_check = 0;
