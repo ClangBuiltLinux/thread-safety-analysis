@@ -57,13 +57,13 @@ static const int nfnl_group2type[NFNLGRP_MAX+1] = {
 	[NFNLGRP_NFTRACE]		= NFNL_SUBSYS_NFTABLES,
 };
 
-void nfnl_lock(__u8 subsys_id)
+void nfnl_lock(__u8 subsys_id) __acquires_mutex(table[subsys_id].mutex)
 {
 	mutex_lock(&table[subsys_id].mutex);
 }
 EXPORT_SYMBOL_GPL(nfnl_lock);
 
-void nfnl_unlock(__u8 subsys_id)
+void nfnl_unlock(__u8 subsys_id) __releases_mutex(table[subsys_id].mutex)
 {
 	mutex_unlock(&table[subsys_id].mutex);
 }
