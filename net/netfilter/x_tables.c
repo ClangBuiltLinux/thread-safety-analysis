@@ -1204,7 +1204,7 @@ EXPORT_SYMBOL(xt_free_table_info);
 
 /* Find table by name, grabs mutex & ref.  Returns ERR_PTR on error. */
 struct xt_table *xt_find_table_lock(struct net *net, u_int8_t af,
-				    const char *name)
+				    const char *name) __no_thread_safety_analysis
 {
 	struct xt_table *t, *found = NULL;
 

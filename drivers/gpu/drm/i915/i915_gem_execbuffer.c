@@ -782,7 +782,7 @@ static struct i915_request *__eb_wait_for_ring(struct intel_ring *ring)
 	return i915_request_get(rq);
 }
 
-static int eb_wait_for_ring(const struct i915_execbuffer *eb)
+static int eb_wait_for_ring(const struct i915_execbuffer *eb) __requires_mutex(eb->i915->drm.struct_mutex)
 {
 	const struct intel_context *ce;
 	struct i915_request *rq;

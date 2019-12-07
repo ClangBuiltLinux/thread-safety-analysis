@@ -102,7 +102,7 @@ __i915_gem_userptr_set_active(struct drm_i915_gem_object *obj, bool value)
 
 static int
 userptr_mn_invalidate_range_start(struct mmu_notifier *_mn,
-				  const struct mmu_notifier_range *range)
+				  const struct mmu_notifier_range *range) __no_thread_safety_analysis
 {
 	struct i915_mmu_notifier *mn =
 		container_of(_mn, struct i915_mmu_notifier, mn);
@@ -409,7 +409,7 @@ __i915_mm_struct_free__worker(struct work_struct *work)
 }
 
 static void
-__i915_mm_struct_free(struct kref *kref)
+__i915_mm_struct_free(struct kref *kref) __no_thread_safety_analysis
 {
 	struct i915_mm_struct *mm = container_of(kref, typeof(*mm), kref);
 

@@ -1009,7 +1009,7 @@ static struct drm_dp_aux *i2c_to_aux(struct i2c_adapter *i2c)
 	return container_of(i2c, struct drm_dp_aux, ddc);
 }
 
-static void lock_bus(struct i2c_adapter *i2c, unsigned int flags)
+static void lock_bus(struct i2c_adapter *i2c, unsigned int flags) __no_thread_safety_analysis
 {
 	mutex_lock(&i2c_to_aux(i2c)->hw_mutex);
 }
@@ -1019,7 +1019,7 @@ static int trylock_bus(struct i2c_adapter *i2c, unsigned int flags)
 	return mutex_trylock(&i2c_to_aux(i2c)->hw_mutex);
 }
 
-static void unlock_bus(struct i2c_adapter *i2c, unsigned int flags)
+static void unlock_bus(struct i2c_adapter *i2c, unsigned int flags) __no_thread_safety_analysis
 {
 	mutex_unlock(&i2c_to_aux(i2c)->hw_mutex);
 }

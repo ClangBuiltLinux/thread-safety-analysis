@@ -602,7 +602,7 @@ static void
 intel_dp_pps_init(struct intel_dp *intel_dp);
 
 static intel_wakeref_t
-pps_lock(struct intel_dp *intel_dp)
+pps_lock(struct intel_dp *intel_dp) __no_thread_safety_analysis
 {
 	struct drm_i915_private *dev_priv = dp_to_i915(intel_dp);
 	intel_wakeref_t wakeref;
@@ -620,7 +620,7 @@ pps_lock(struct intel_dp *intel_dp)
 }
 
 static intel_wakeref_t
-pps_unlock(struct intel_dp *intel_dp, intel_wakeref_t wakeref)
+pps_unlock(struct intel_dp *intel_dp, intel_wakeref_t wakeref) __no_thread_safety_analysis
 {
 	struct drm_i915_private *dev_priv = dp_to_i915(intel_dp);
 

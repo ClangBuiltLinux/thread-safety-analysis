@@ -37,7 +37,7 @@
 
 static bool shrinker_lock(struct drm_i915_private *i915,
 			  unsigned int flags,
-			  bool *unlock)
+			  bool *unlock) __try_acquires_mutex(1, i915->drm.struct_mutex) __no_thread_safety_analysis
 {
 	struct mutex *m = &i915->drm.struct_mutex;
 
@@ -61,7 +61,7 @@ static bool shrinker_lock(struct drm_i915_private *i915,
 	BUG();
 }
 
-static void shrinker_unlock(struct drm_i915_private *i915, bool unlock)
+static void shrinker_unlock(struct drm_i915_private *i915, bool unlock) __releases_mutex(i915->drm.struct_mutex) __no_thread_safety_analysis
 {
 	if (!unlock)
 		return;

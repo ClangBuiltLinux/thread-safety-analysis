@@ -3748,7 +3748,7 @@ static int ata_eh_handle_dev_fail(struct ata_device *dev, int err)
 int ata_eh_recover(struct ata_port *ap, ata_prereset_fn_t prereset,
 		   ata_reset_fn_t softreset, ata_reset_fn_t hardreset,
 		   ata_postreset_fn_t postreset,
-		   struct ata_link **r_failed_link) __requires_mutex(ap->host->eh_mutex)
+		   struct ata_link **r_failed_link)
 {
 	struct ata_link *link;
 	struct ata_device *dev;

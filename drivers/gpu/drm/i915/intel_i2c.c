@@ -775,7 +775,7 @@ static const struct i2c_algorithm gmbus_algorithm = {
 };
 
 static void gmbus_lock_bus(struct i2c_adapter *adapter,
-			   unsigned int flags)
+			   unsigned int flags) __no_thread_safety_analysis
 {
 	struct intel_gmbus *bus = to_intel_gmbus(adapter);
 	struct drm_i915_private *dev_priv = bus->dev_priv;
@@ -793,7 +793,7 @@ static int gmbus_trylock_bus(struct i2c_adapter *adapter,
 }
 
 static void gmbus_unlock_bus(struct i2c_adapter *adapter,
-			     unsigned int flags)
+			     unsigned int flags) __no_thread_safety_analysis
 {
 	struct intel_gmbus *bus = to_intel_gmbus(adapter);
 	struct drm_i915_private *dev_priv = bus->dev_priv;
