@@ -1542,17 +1542,12 @@ struct nf_mttg_trav {
 enum {
 	MTTG_TRAV_INIT,
 	MTTG_TRAV_NFP_UNSPEC,
-	MTTG_TRAV_NFP_SPEC,
-	MTTG_TRAV_DONE,
+	MTTG_TRAV_NFP_SPEC
 };
 
 static void *xt_mttg_seq_next(struct seq_file *seq, void *v, loff_t *ppos,
     bool is_target)
 {
-	static const uint8_t next_class[] = {
-		[MTTG_TRAV_NFP_UNSPEC] = MTTG_TRAV_NFP_SPEC,
-		[MTTG_TRAV_NFP_SPEC]   = MTTG_TRAV_DONE,
-	};
 	uint8_t nfproto = (unsigned long)PDE_DATA(file_inode(seq->file));
 	struct nf_mttg_trav *trav = seq->private;
 
@@ -1571,7 +1566,7 @@ static void *xt_mttg_seq_next(struct seq_file *seq, void *v, loff_t *ppos,
 		mutex_lock(&xt[nfproto].mutex);
 		trav->head = trav->curr = is_target ?
 			&xt[nfproto].target : &xt[nfproto].match;
-		trav->class = next_class[trav->class];
+		trav->class = MTTG_TRAV_NFP_SPEC;
 		break;
 	case MTTG_TRAV_NFP_SPEC:
 		trav->curr = trav->curr->next;
