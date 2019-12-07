@@ -248,7 +248,7 @@ static int sg_allow_access(struct file *filp, unsigned char *cmd)
 }
 
 static int
-open_wait(Sg_device *sdp, int flags)
+open_wait(Sg_device *sdp, int flags) __requires_mutex(sdp->open_rel_lock)
 {
 	int retval = 0;
 
