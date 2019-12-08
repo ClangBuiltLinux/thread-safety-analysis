@@ -1270,20 +1270,20 @@ struct xt_table *xt_request_find_table_lock(struct net *net, u_int8_t af,
 }
 EXPORT_SYMBOL_GPL(xt_request_find_table_lock);
 
-void xt_table_unlock(struct xt_table *table)
+void xt_table_unlock(struct xt_table *table) __releases_mutex(xt[table->af].mutex)
 {
 	mutex_unlock(&xt[table->af].mutex);
 }
 EXPORT_SYMBOL_GPL(xt_table_unlock);
 
 #ifdef CONFIG_COMPAT
-void xt_compat_lock(u_int8_t af)
+void xt_compat_lock(u_int8_t af) __acquires_mutex(xt[af].compat_mutex)
 {
 	mutex_lock(&xt[af].compat_mutex);
 }
 EXPORT_SYMBOL_GPL(xt_compat_lock);
 
-void xt_compat_unlock(u_int8_t af)
+void xt_compat_unlock(u_int8_t af) __releases_mutex(xt[af].compat_mutex)
 {
 	mutex_unlock(&xt[af].compat_mutex);
 }
@@ -1490,7 +1490,7 @@ void *xt_unregister_table(struct xt_table *table)
 EXPORT_SYMBOL_GPL(xt_unregister_table);
 
 #ifdef CONFIG_PROC_FS
-static void *xt_table_seq_start(struct seq_file *seq, loff_t *pos)
+static void *xt_table_seq_start(struct seq_file *seq, loff_t *pos) __no_thread_safety_analysis
 {
 	struct net *net = seq_file_net(seq);
 	u_int8_t af = (unsigned long)PDE_DATA(file_inode(seq->file));
@@ -1507,7 +1507,7 @@ static void *xt_table_seq_next(struct seq_file *seq, void *v, loff_t *pos)
 	return seq_list_next(v, &net->xt.tables[af], pos);
 }
 
-static void xt_table_seq_stop(struct seq_file *seq, void *v)
+static void xt_table_seq_stop(struct seq_file *seq, void *v) __no_thread_safety_analysis
 {
 	u_int8_t af = (unsigned long)PDE_DATA(file_inode(seq->file));
 
@@ -1546,7 +1546,7 @@ enum {
 };
 
 static void *xt_mttg_seq_next(struct seq_file *seq, void *v, loff_t *ppos,
-    bool is_target)
+    bool is_target) __no_thread_safety_analysis
 {
 	uint8_t nfproto = (unsigned long)PDE_DATA(file_inode(seq->file));
 	struct nf_mttg_trav *trav = seq->private;
@@ -1595,7 +1595,7 @@ static void *xt_mttg_seq_start(struct seq_file *seq, loff_t *pos,
 	return trav;
 }
 
-static void xt_mttg_seq_stop(struct seq_file *seq, void *v)
+static void xt_mttg_seq_stop(struct seq_file *seq, void *v) __no_thread_safety_analysis
 {
 	uint8_t nfproto = (unsigned long)PDE_DATA(file_inode(seq->file));
 	struct nf_mttg_trav *trav = seq->private;
