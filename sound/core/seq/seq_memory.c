@@ -292,7 +292,7 @@ __error:
  */
 int snd_seq_event_dup(struct snd_seq_pool *pool, struct snd_seq_event *event,
 		      struct snd_seq_event_cell **cellp, int nonblock,
-		      struct file *file, struct mutex *mutexp)
+		      struct file *file, struct mutex *mutexp) __requires_conditionally(mutexp)
 {
 	int ncells, err;
 	unsigned int extlen;

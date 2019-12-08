@@ -910,7 +910,7 @@ static int snd_seq_client_enqueue_event(struct snd_seq_client *client,
 					struct snd_seq_event *event,
 					struct file *file, int blocking,
 					int atomic, int hop,
-					struct mutex *mutexp)
+					struct mutex *mutexp) __requires_conditionally(mutexp)
 {
 	struct snd_seq_event_cell *cell;
 	int err;
