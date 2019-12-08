@@ -20,7 +20,7 @@ void tty_lock(struct tty_struct *tty) __acquires_mutex(tty->legacy_mutex) __no_t
 }
 EXPORT_SYMBOL(tty_lock);
 
-int tty_lock_interruptible(struct tty_struct *tty)
+int tty_lock_interruptible(struct tty_struct *tty) __try_acquires_mutex(0, tty->legacy_mutex) __no_thread_safety_analysis
 {
 	int ret;
 
@@ -42,13 +42,13 @@ void tty_unlock(struct tty_struct *tty) __releases_mutex(tty->legacy_mutex) __no
 }
 EXPORT_SYMBOL(tty_unlock);
 
-void tty_lock_slave(struct tty_struct *tty)
+void tty_lock_slave(struct tty_struct *tty) __acquires_mutex(tty->legacy_mutex) __no_thread_safety_analysis
 {
 	if (tty && tty != tty->link)
 		tty_lock(tty);
 }
 
-void tty_unlock_slave(struct tty_struct *tty)
+void tty_unlock_slave(struct tty_struct *tty) __releases_mutex(tty->legacy_mutex) __no_thread_safety_analysis
 {
 	if (tty && tty != tty->link)
 		tty_unlock(tty);

@@ -765,11 +765,11 @@ extern long vt_compat_ioctl(struct tty_struct *tty,
 
 /* tty_mutex.c */
 /* functions for preparation of BKL removal */
-extern void tty_lock(struct tty_struct *tty);
-extern int  tty_lock_interruptible(struct tty_struct *tty);
-extern void tty_unlock(struct tty_struct *tty);
-extern void tty_lock_slave(struct tty_struct *tty);
-extern void tty_unlock_slave(struct tty_struct *tty);
+extern void tty_lock(struct tty_struct *tty) __acquires_mutex(tty->legacy_mutex);
+extern int  tty_lock_interruptible(struct tty_struct *tty) __try_acquires_mutex(0, tty->legacy_mutex);
+extern void tty_unlock(struct tty_struct *tty) __releases_mutex(tty->legacy_mutex);
+extern void tty_lock_slave(struct tty_struct *tty) __acquires_mutex(tty->legacy_mutex);
+extern void tty_unlock_slave(struct tty_struct *tty) __releases_mutex(tty->legacy_mutex);
 extern void tty_set_lock_subclass(struct tty_struct *tty);
 
 #ifdef CONFIG_PROC_FS
